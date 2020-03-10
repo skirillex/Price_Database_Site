@@ -23,8 +23,8 @@ class MyApp extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,  // does nothing so far
               children: [
               Container(
-                alignment: Alignment.topLeft,
-                width: 600,  // stretches out to the left middle of screen so far
+                alignment: Alignment(0.0, 0.0),
+                width: 500,  // stretches out to the left middle of screen so far
                 child: TextField(
                   maxLines: 1,
                   obscureText: false,
@@ -64,27 +64,58 @@ class MyApp extends StatelessWidget {
             dragStartBehavior: DragStartBehavior.down,
             shrinkWrap: true,
             children: <Widget>[
+              Column(
+                children: <Widget>[
+                  Container(
+                    decoration: const BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(width: 1.0, color: Colors.white70)  // need to change this to fit theme
+                      )
+                    ),
+                    height: 35,
+                    alignment: Alignment(-0.95, -0.8),
+                    child: Text("Top Price Drops Link",
+                    style: TextStyle(fontSize: 20),),
+                  ),
+                  Container(
+                    height: 10,
+                  )
+                ],
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Flexible(
-                    child: Image.asset("img/superdrytestimg.jpg")),
-                  Flexible(
-                    flex: 2,
                     child: Container(
+                        height: 300,
+                        width: 270,
+                        child: Image.asset("img/superdrytestimg.jpg"))),
+                  Flexible(
 
-                      child: Text("Lightweight Leather Track Jacket",
-                      style: TextStyle(fontSize: 25.0),))),
+                    flex: 2,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Container(
+                          height: 100,
+                        ),
+                        Container(
+
+                          child: SelectableText("Lightweight Leather Track Jacket",
+                          style: TextStyle(fontSize: 25.0),)),
+                      ],
+                    )),
                   Flexible(
                     flex: 2,
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text("\$119.98",
-                        style: TextStyle(fontSize: 30,color: Colors.red),
-                        )
-                      ]
+                        Container(
+                          height: 165,
+                        ),
+                        PriceColumn(119.38, "2020-03-09"),
+                      ],
                     )
                   )
                 ],
@@ -110,4 +141,62 @@ class MyApp extends StatelessWidget {
       
     );
   }
+}
+
+// this class created the price column to the right of the name of item
+class PriceColumn extends StatelessWidget{ //stateless because it needs to be drawn only once once page is loaded
+  double price;
+  String date;
+
+
+  PriceColumn(double price, String date)
+  {
+    this.price = price;
+    this.date = date;
+  }
+  @override
+  Widget build(BuildContext context){
+    return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+        SelectableText("\$$price",
+        style: TextStyle(fontSize: 30,color: Colors.red),
+        ),
+          Container(
+            height: 10,
+            child: Spacer(flex: 1,),
+          ),
+        Container(
+            //alignment: Alignment(-0.9, -0.9),
+          width: 100,
+          child: Text("SuperDry Price",
+            textAlign: TextAlign.right,
+            style: TextStyle(fontSize: 10,),
+            )
+          ),
+        Container(
+          width: 100,
+          child: Text("as of $date",
+            textAlign: TextAlign.right,
+            style: TextStyle(fontSize: 10),),
+        ),
+          Container(
+            height: 20,
+            child: Spacer(flex: 1,),
+          ),
+          Container(
+              width: 142,
+              //alignment: Alignment(-1, -0),
+              child: FlatButton(
+                color: Colors.black87,
+                hoverColor: Colors.white30,
+                onPressed: () {print("pressed View at Superdry");},
+                child: Text("View at SuperDry"),)
+          )
+      ]
+    );
+  }
+
 }
