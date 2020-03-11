@@ -94,21 +94,19 @@ class MyApp extends StatelessWidget {
                   Flexible(
 
                     flex: 2,
-                    child: Column(
+                    child:Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Container(
-                          height: 100,
-                        ),
-                        Container(
-
-                          child: SelectableText("Lightweight Leather Track Jacket",
-                          style: TextStyle(fontSize: 25.0),)),
-                      ],
-                    )),
+                      Container(
+                      height: 100,
+                      ),
+                      DescriptionColumn("Lightweight Leather Track Jacket", "Jackets")
+                      ]
+                    )
+                  ),
                   Flexible(
-                    flex: 2,
+                    flex: 0,
                     child: Column(
                       children: <Widget>[
                         Container(
@@ -141,6 +139,56 @@ class MyApp extends StatelessWidget {
       
     );
   }
+}
+// this class creates the description column in the center of the item row
+class DescriptionColumn extends StatelessWidget{
+  String itemname;
+  String categoryname;
+  
+  DescriptionColumn(String item, String category)
+  {
+    this.itemname = item;
+    this.categoryname = category;
+  }
+  
+  Widget build(BuildContext context){
+    return Container(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                SelectableText("Lightweight Leather Track Jacket",
+                  style: TextStyle(fontSize: 25.0),),
+                Container(
+                  height: 65,
+                  alignment: Alignment(-1, 0),
+                  child:Text(categoryname, textAlign: TextAlign.left,),
+                ),
+                Row(
+                  //crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  //crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+
+
+
+                    Container(
+                        width: 142,
+                        //alignment: Alignment(-1, -0),
+                        child: FlatButton(
+                          color: Colors.black87,
+                          hoverColor: Colors.white30,
+                          onPressed: () {print("pressed View at Superdry");},
+                          child: Text("View at SuperDry"),)
+                    ),
+                  ],
+                )
+              ],
+            )
+    );
+  }
+  
+  
+  
 }
 
 // this class created the price column to the right of the name of item
@@ -186,15 +234,7 @@ class PriceColumn extends StatelessWidget{ //stateless because it needs to be dr
             height: 20,
             child: Spacer(flex: 1,),
           ),
-          Container(
-              width: 142,
-              //alignment: Alignment(-1, -0),
-              child: FlatButton(
-                color: Colors.black87,
-                hoverColor: Colors.white30,
-                onPressed: () {print("pressed View at Superdry");},
-                child: Text("View at SuperDry"),)
-          )
+
       ]
     );
   }
