@@ -12,8 +12,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "Superdry Price DB",
       theme: ThemeData(
-        brightness: Brightness.dark,
-        primaryColor: Colors.blueGrey
+        //brightness: Brightness.dark,
+       // primaryColor: Colors.blueGrey
+       primaryColor: Colors.deepOrange,
+           inputDecorationTheme: const InputDecorationTheme(
+             labelStyle: TextStyle(color: Colors.black87),
+             //hintStyle: TextStyle(color: Colors.black)
+           )
       ),
       home: Scaffold(
         appBar: AppBar(  // becase materialApp is used appBar is created here.
@@ -41,12 +46,16 @@ class MyApp extends StatelessWidget {
                   child: ButtonBar(
                     children: <Widget>[
                       FlatButton(
+                        hoverColor: Colors.deepOrangeAccent,
                         onPressed: () {print("pressed sign up");},
-                        child: Text("Sign Up"),
+                        child: Text("Sign Up",
+                        style: TextStyle(color: Colors.white),),
                       ),
                       FlatButton(
+                        hoverColor: Colors.deepOrangeAccent,
                         onPressed: () {print("pressed log in");},
-                        child: Text("Log in"),
+                        child: Text("Log in",
+                        style: TextStyle(color: Colors.white),),
                       )
                     ],
                   ),
@@ -62,9 +71,9 @@ class MyApp extends StatelessWidget {
             padding: const EdgeInsets.all(8),
             //physics: const ScrollPhysics(),
             dragStartBehavior: DragStartBehavior.down,
-            shrinkWrap: true,
+            //shrinkWrap: true,
             children: <Widget>[
-              Column(
+              Column( // this column and container builds and holds the links bar underneath the appbar
                 children: <Widget>[
                   Container(
                     decoration: const BoxDecoration(
@@ -82,6 +91,9 @@ class MyApp extends StatelessWidget {
                   )
                 ],
               ),
+              Container( // this container creates some padding between link bar above and content below
+                height: 30,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -92,7 +104,6 @@ class MyApp extends StatelessWidget {
                         width: 270,
                         child: Image.asset("img/superdrytestimg.jpg"))),
                   Flexible(
-
                     flex: 2,
                     child:Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -124,15 +135,17 @@ class MyApp extends StatelessWidget {
                 Container(
                   margin: const EdgeInsets.all(10.0),
                   color: Colors.redAccent,
-                  child: Text("price History Text container",
+                  child: Text("SuperDry Price History",
                   style: TextStyle(fontSize: 35),),
                 ),
+
+                Row(
+                  children: <Widget>[
+                    ChartCard(),
+                  ],
+                ),
               //),
-              Row(
-                children: <Widget>[
-                  Text("Price History Text")  // possibly should be a container to change background
-                ],
-              )
+
             ]
           )
         ),
@@ -140,6 +153,36 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+class ChartCard extends StatefulWidget{
+  @override
+  _ChartCardState createState() => _ChartCardState();
+}
+
+class _ChartCardState extends State<ChartCard>{
+  @override
+  Widget build(BuildContext context){
+    return SizedBox(
+      //height: 100,
+      width: 800,
+      child: Card(
+        elevation: 4,  //supported: 6, 8, 16, 24
+        child: Column(
+          //crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Divider(),
+            Image.asset("img/camelchart.png", fit: BoxFit.fitWidth,),
+            Divider(),
+            Text("this is a chart")
+            //Text("test")
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
 // this class creates the description column in the center of the item row
 class DescriptionColumn extends StatelessWidget{
   String itemname;
@@ -178,7 +221,8 @@ class DescriptionColumn extends StatelessWidget{
                           color: Colors.black87,
                           hoverColor: Colors.white30,
                           onPressed: () {print("pressed View at Superdry");},
-                          child: Text("View at SuperDry"),)
+                          child: Text("View at SuperDry",
+                          style: TextStyle(color: Colors.white),),)
                     ),
                   ],
                 )
@@ -214,7 +258,7 @@ class PriceColumn extends StatelessWidget{ //stateless because it needs to be dr
         ),
           Container(
             height: 10,
-            child: Spacer(flex: 1,),
+            //child: Spacer(flex: 1,),
           ),
         Container(
             //alignment: Alignment(-0.9, -0.9),
@@ -232,7 +276,7 @@ class PriceColumn extends StatelessWidget{ //stateless because it needs to be dr
         ),
           Container(
             height: 20,
-            child: Spacer(flex: 1,),
+           //child: Spacer(flex: 1,),
           ),
 
       ]
