@@ -71,14 +71,14 @@ class MyApp extends StatelessWidget {
             padding: const EdgeInsets.all(8),
             //physics: const ScrollPhysics(),
             dragStartBehavior: DragStartBehavior.down,
-            //shrinkWrap: true,
+
             children: <Widget>[
               Column( // this column and container builds and holds the links bar underneath the appbar
                 children: <Widget>[
                   Container(
                     decoration: const BoxDecoration(
                       border: Border(
-                        bottom: BorderSide(width: 1.0, color: Colors.white70)  // need to change this to fit theme
+                        bottom: BorderSide(width: 1.0, color: Colors.black38)  // need to change this to fit theme
                       )
                     ),
                     height: 35,
@@ -129,24 +129,15 @@ class MyApp extends StatelessWidget {
                   )
                 ],
               ),
-              //Flexible(
-                
-                //child:
-                Container(
-                  margin: const EdgeInsets.all(10.0),
-                  color: Colors.redAccent,
-                  child: Text("SuperDry Price History",
-                  style: TextStyle(fontSize: 35),),
-                ),
-
-                Row(
-                  children: <Widget>[
-                    ChartCard(),
-                  ],
-                ),
-              //),
-
-            ]
+              Divider(
+                height: 20,
+                color: Colors.black,
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: ChartCard(),
+              )
+              ]
           )
         ),
       
@@ -159,22 +150,96 @@ class ChartCard extends StatefulWidget{
   _ChartCardState createState() => _ChartCardState();
 }
 
-class _ChartCardState extends State<ChartCard>{
+class _ChartCardState extends State<ChartCard> with SingleTickerProviderStateMixin{
+
+  TabController _tabController;
+  @override
+  void initState(){
+    _tabController = new TabController(length: 4, vsync: this, initialIndex: 1);
+    super.initState();
+  }
   @override
   Widget build(BuildContext context){
     return SizedBox(
-      //height: 100,
+      height: 700,
       width: 800,
       child: Card(
         elevation: 4,  //supported: 6, 8, 16, 24
         child: Column(
-          //crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Divider(),
-            Image.asset("img/camelchart.png", fit: BoxFit.fitWidth,),
-            Divider(),
-            Text("this is a chart")
-            //Text("test")
+            Container(
+              height: 50,
+              color: Colors.deepOrangeAccent,
+              child: Align(
+                alignment: Alignment.center,
+                child: Text("SuperDry Price History",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 25,
+                 letterSpacing: 1
+                ),),
+              ),
+            ),
+            Container(
+              color: Colors.deepOrangeAccent,
+              child: TabBar(
+                labelColor: Colors.deepOrangeAccent,
+                unselectedLabelColor: Colors.white,
+                indicatorSize: TabBarIndicatorSize.label,
+
+                indicator: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10)
+                  ),
+                  color: Colors.white
+                ),
+                tabs: <Widget>[
+                  Tab( icon: Icon(Icons.calendar_today),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Text("1 Month",
+                          style: TextStyle(fontWeight: FontWeight.bold,
+                              letterSpacing: 1),),
+                    ),
+                  ),
+                  Tab( icon: Icon(Icons.calendar_today),
+                    child: Align(
+                    alignment: Alignment.center,
+                    child: Text("3 Months",
+                    style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1),),
+                  ),),
+                  Tab(icon: Icon(Icons.calendar_today),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Text("6 Months",
+                          style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1)),
+                    ),),
+                  //Tab(text: "All", icon: Icon(Icons.access_time),)
+                  Tab(
+                    icon: Icon(Icons.access_time),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Text("ALL",
+                          style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1)),
+                    ),
+                  )
+                ],
+                controller: _tabController,
+              ),),
+
+            Expanded(
+              child:TabBarView(
+              children: <Widget>[
+                Image.asset("img/camelchart.png", fit: BoxFit.fitWidth,),
+                Text("this is a chart"),
+                Text("test tab 3"),
+                Text("Test tab 4")
+              ],
+              controller: _tabController,
+            ),
+            )
           ],
         ),
       ),
