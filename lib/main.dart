@@ -1,14 +1,49 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+  String getItemUrl = "http://127.0.0.1:5000/api/v1/resources/items/?id=74443";
+
+
   @override
   Widget build(BuildContext context) {
-    String url = "";
+    //String url = "http://127.0.0.1:5000/api/v1/resources/items/?id=74443";
+
+    Future<ItemData> fetchItem() async {
+      final response = await http.get(getItemUrl);
+
+      if (response.statusCode == 200){
+        //print(json.decode(response.body));
+        return ItemData.fromJson(json.decode(response.body));
+
+      } else{
+        throw Exception("Failed to load item");
+      }
+    }
+
+    Future<ItemData> futureItem = fetchItem();
+
+    Future<ItemPriceData> fetchItemPrice() async {
+      final response = await http.get("http://127.0.0.1:5000/api/v1/resources/prices/?id=66849");
+
+      if (response.statusCode == 200){
+        //print(json.decode(response.body));
+        return ItemPriceData.fromJson(json.decode(response.body));
+
+      } else{
+        throw Exception("Failed to load item");
+      }
+    }
+
+    Future<ItemPriceData> futureItemPrice = fetchItemPrice();
+
     return MaterialApp(
       title: "Superdry Price DB",
       theme: ThemeData(
@@ -102,7 +137,19 @@ class MyApp extends StatelessWidget {
                     child: Container(
                         height: 300,
                         width: 270,
-                        child: Image.asset("img/superdrytestimg.jpg"))),
+                        child: FutureBuilder<ItemData>(
+                          future: futureItem,
+                          builder: (context, snapshot){
+                            if (snapshot.hasData){
+                              return Image.network(snapshot.data.img_url);  //Text(snapshot.data.name);
+                            } else if (snapshot.hasError){
+                              return Text("${snapshot.error}");
+                            }
+                            return CircularProgressIndicator();
+                          },
+                        )
+                    )
+                  ),
                   Flexible(
                     flex: 2,
                     child:Column(
@@ -112,7 +159,7 @@ class MyApp extends StatelessWidget {
                       Container(
                       height: 100,
                       ),
-                      DescriptionColumn("Lightweight Leather Track Jacket", "Jackets")
+                      DescriptionColumn(futureItem)
                       ]
                     )
                   ),
@@ -123,7 +170,7 @@ class MyApp extends StatelessWidget {
                         Container(
                           height: 165,
                         ),
-                        PriceColumn(119.38, "2020-03-09"),
+                        PriceColumn("2020-03-09",futureItemPrice),
                       ],
                     )
                   )
@@ -136,6 +183,23 @@ class MyApp extends StatelessWidget {
               Align(
                 alignment: Alignment.center,
                 child: ChartCard(),
+              ),
+              Row(
+                children: <Widget>[
+                  //Text(fetchItem()),
+                  FutureBuilder<ItemPriceData>(
+                    future: futureItemPrice,
+                    builder: (context, snapshot){
+                      if (snapshot.hasData){
+                        print(snapshot.data.item_price);
+                        return Text("printed");
+                      } else if (snapshot.hasError){
+                        return Text("${snapshot.error}");
+                      }
+                      return CircularProgressIndicator();
+                    },
+                  )
+                ],
               )
               ]
           )
@@ -250,35 +314,55 @@ class _ChartCardState extends State<ChartCard> with SingleTickerProviderStateMix
 
 // this class creates the description column in the center of the item row
 class DescriptionColumn extends StatelessWidget{
-  String itemname;
   String categoryname;
-  
-  DescriptionColumn(String item, String category)
+
+  Future<ItemData> futureItem;
+
+  DescriptionColumn(Future<ItemData> futureItem)
   {
-    this.itemname = item;
-    this.categoryname = category;
+    this.futureItem = futureItem;
   }
+
+  String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
   
   Widget build(BuildContext context){
     return Container(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                SelectableText("Lightweight Leather Track Jacket",
-                  style: TextStyle(fontSize: 25.0),),
+                FutureBuilder<ItemData>(
+                  future: futureItem,
+                  builder: (context, snapshot){
+                    if (snapshot.hasData){
+                      return SelectableText(snapshot.data.name,
+                        style: TextStyle(fontSize: 25.0),);
+                    } else if (snapshot.hasError){
+                      return Text("${snapshot.error}");
+                    }
+                    return CircularProgressIndicator();
+                  },
+                ),
+
                 Container(
                   height: 65,
                   alignment: Alignment(-1, 0),
-                  child:Text(categoryname, textAlign: TextAlign.left,),
+                  child: FutureBuilder<ItemData>(
+                    future: futureItem,
+                    builder: (context, snapshot){
+                      if (snapshot.hasData){
+                        return Text(capitalize(snapshot.data.url.split("\/")[3]), textAlign: TextAlign.left,); // this returns the category of the item, found in item url
+                      } else if (snapshot.hasError){
+                        return Text("${snapshot.error}");
+                      }
+                      return CircularProgressIndicator();
+                    },
+                  ),
                 ),
                 Row(
                   //crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.end,
                   //crossAxisAlignment: CrossAxisAlignment.end,
                   children: <Widget>[
-
-
-
                     Container(
                         width: 142,
                         //alignment: Alignment(-1, -0),
@@ -302,14 +386,15 @@ class DescriptionColumn extends StatelessWidget{
 
 // this class created the price column to the right of the name of item
 class PriceColumn extends StatelessWidget{ //stateless because it needs to be drawn only once once page is loaded
-  double price;
   String date;
+  Future<ItemPriceData> futureItemPrice;
 
 
-  PriceColumn(double price, String date)
+  PriceColumn(String date, Future<ItemPriceData> futureItemPrice)
   {
-    this.price = price;
+
     this.date = date;
+    this.futureItemPrice = futureItemPrice;
   }
   @override
   Widget build(BuildContext context){
@@ -318,9 +403,22 @@ class PriceColumn extends StatelessWidget{ //stateless because it needs to be dr
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-        SelectableText("\$$price",
-        style: TextStyle(fontSize: 30,color: Colors.red),
-        ),
+          FutureBuilder<ItemPriceData>(
+            future: futureItemPrice,
+            builder: (context, snapshot){
+              if (snapshot.hasData){
+                //print(snapshot.data.item_price[0][0]);
+                String price = snapshot.data.item_price[0][0].toStringAsFixed(2);  //gets the price and converts it to 2 decimal places
+                return SelectableText("\$${price}",
+                  style: TextStyle(fontSize: 30,color: Colors.red),
+                );
+              } else if (snapshot.hasError){
+                return Text("${snapshot.error}");
+              }
+              return CircularProgressIndicator();
+            },
+          ),
+
           Container(
             height: 10,
             //child: Spacer(flex: 1,),
@@ -334,11 +432,26 @@ class PriceColumn extends StatelessWidget{ //stateless because it needs to be dr
             )
           ),
         Container(
-          width: 100,
-          child: Text("as of $date",
-            textAlign: TextAlign.right,
-            style: TextStyle(fontSize: 10),),
+          width: 105,
+          child: FutureBuilder<ItemPriceData>(
+            future: futureItemPrice,
+            builder: (context, snapshot){
+              if (snapshot.hasData){
+                String date = snapshot.data.item_price[0][1];
+                date = date.substring(0,date.length -12);
+                return   Text("as of $date",
+                  textAlign: TextAlign.right,
+                  style: TextStyle(fontSize: 10)
+                );
+              } else if (snapshot.hasError){
+                return Text("${snapshot.error}");
+              }
+              return CircularProgressIndicator();
+            },
+          )
         ),
+
+
           Container(
             height: 20,
            //child: Spacer(flex: 1,),
@@ -349,3 +462,39 @@ class PriceColumn extends StatelessWidget{ //stateless because it needs to be dr
   }
 
 }
+
+
+class ItemData {
+  int product_id;
+  String name;
+  String url;
+  String img_url;
+
+  ItemData({this.product_id, this.name, this.img_url, this.url});
+
+  factory ItemData.fromJson(Map<String, dynamic> json)
+  {
+    return ItemData(
+      product_id: json["item_id"],
+      name: json["name"],
+      url: json["url"],
+      img_url: json["img_url"],
+    );
+  }
+
+}
+class ItemPriceData {
+  List item_price;
+
+  ItemPriceData({this.item_price});
+
+  factory ItemPriceData.fromJson(Map<String, dynamic> json)
+  {
+    return ItemPriceData(
+      item_price: json["item_price"]
+    );
+  }
+
+}
+
+
