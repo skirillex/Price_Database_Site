@@ -5,6 +5,9 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import 'package:charts_flutter/flutter.dart' as charts;
+
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -182,7 +185,7 @@ class MyApp extends StatelessWidget {
               ),
               Align(
                 alignment: Alignment.center,
-                child: ChartCard(),
+                child: ChartCard(futureItemPrice),
               ),
               Row(
                 children: <Widget>[
@@ -210,6 +213,10 @@ class MyApp extends StatelessWidget {
 }
 
 class ChartCard extends StatefulWidget{
+  Future<ItemPriceData> futureItemPrice;
+
+  ChartCard(this.futureItemPrice);
+
   @override
   _ChartCardState createState() => _ChartCardState();
 }
@@ -297,8 +304,28 @@ class _ChartCardState extends State<ChartCard> with SingleTickerProviderStateMix
               child:TabBarView(
               children: <Widget>[
                 Image.asset("img/camelchart.png", fit: BoxFit.fitWidth,),
-                Text("this is a chart"),
-                Text("test tab 3"),
+                FutureBuilder<ItemPriceData>(
+                  future: widget.futureItemPrice,
+                  builder: (context, snapshot){
+                    if (snapshot.hasData){
+                      return PriceHistoryChart(snapshot.data.item_price,30, true);
+                    } else if (snapshot.hasError){
+                      return Text("${snapshot.error}");
+                    }
+                    return CircularProgressIndicator();
+                  },
+                ),
+                FutureBuilder<ItemPriceData>(
+                  future: widget.futureItemPrice,
+                  builder: (context, snapshot){
+                    if (snapshot.hasData){
+                      return PriceHistoryChart(snapshot.data.item_price,90, true);
+                    } else if (snapshot.hasError){
+                      return Text("${snapshot.error}");
+                    }
+                    return CircularProgressIndicator();
+                  },
+                ),
                 Text("Test tab 4")
               ],
               controller: _tabController,
@@ -463,6 +490,105 @@ class PriceColumn extends StatelessWidget{ //stateless because it needs to be dr
 
 }
 
+
+class PriceHistoryChart extends StatelessWidget {
+  List<charts.Series> seriesList;
+  bool animate;
+  List prices;
+  DateTime currentDate;
+  int daysback;
+  // PriceHistoryChart(this.seriesList, this.prices, {this.animate});
+
+  PriceHistoryChart(List prices,int daysback, bool animate)
+  {
+    this.prices = prices;
+    this.animate = animate;
+    this.daysback = daysback;
+    this.currentDate = DateTime.now();
+    this.seriesList = _loadPriceData();
+  }
+
+/*
+  factory PriceHistoryChart.withPriceData(){
+    return new PriceHistoryChart(
+      _loadPriceData(),
+      animate: true,
+    );
+  }
+
+ */
+
+  @override
+  Widget build(BuildContext context) {
+    return new charts.TimeSeriesChart(seriesList, animate: animate, behaviors: [
+      new charts.RangeAnnotation([
+        new charts.RangeAnnotationSegment(
+            currentDate.subtract(Duration(days: daysback)), currentDate, //new DateTime(currentDate.year, currentDate.month,currentDate.day),
+            charts.RangeAnnotationAxisType.domain),
+      ]),
+    ]);
+  }
+  
+  List<charts.Series<TimeSeriesPriceHistory, DateTime>> _loadPriceData() {
+
+   List<TimeSeriesPriceHistory> data = [];
+    for (var i in prices){
+      // loops and creates TimeSeries Objects and places it in list
+      var dateClean = i[1].split(" ");
+      var day = dateClean[1];
+      var month = dateClean[2];
+      var year = dateClean[3];
+
+      data.add(TimeSeriesPriceHistory(new DateTime( int.parse(year), monthconvert(month), int.parse(day)), i[0]));
+    }
+    return [
+        new charts.Series<TimeSeriesPriceHistory, DateTime>(
+            id: 'Prices ',
+            domainFn: (TimeSeriesPriceHistory sales, _) => sales.time,
+            measureFn: (TimeSeriesPriceHistory sales, _) => sales.price,
+            data: data
+        )
+      ];
+    }
+
+    int monthconvert(String month) // helper method to convert month strings to ints
+    {
+      if (month == "Jan"){
+        return 1;
+      }
+      else if (month == "Feb"){
+        return 2;
+      }else if (month == "Mar"){
+        return 3;
+      }else if (month == "Apr"){
+        return 4;
+      }else if (month == "May"){
+        return 5;
+      }else if (month == "Jun"){
+        return 6;
+      }else if (month == "Jul"){
+        return 7;
+      }else if (month == "Aug"){
+        return 8;
+      }else if (month == "Sep"){
+        return 9;
+      }else if (month == "Oct"){
+        return 10;
+      }else if (month == "Nov"){
+        return 11;
+      }else if (month == "Dec"){
+        return 12;
+      }
+    }
+
+  }
+
+  class TimeSeriesPriceHistory {
+  final DateTime time;
+  final double price;
+
+  TimeSeriesPriceHistory(this.time, this.price);
+  }
 
 class ItemData {
   int product_id;
