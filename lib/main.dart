@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+import 'package:colliecolliecollie/LayoutTemplate.dart';
+import 'package:colliecolliecollie/Views.dart';
+import 'package:colliecolliecollie/undefined_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -7,48 +10,45 @@ import 'package:http/http.dart' as http;
 
 import 'package:charts_flutter/flutter.dart' as charts;
 
+import 'package:intl/intl.dart';
 
-void main() => runApp(MyApp());
+import 'package:colliecolliecollie/fluro_router.dart';
+
+
+
+void main() {
+  FluroRouter.setupRouter();
+  runApp(MyApp());
+
+}
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-  String getItemUrl = "http://127.0.0.1:5000/api/v1/resources/items/?id=74443";
-
 
   @override
   Widget build(BuildContext context) {
-    //String url = "http://127.0.0.1:5000/api/v1/resources/items/?id=74443";
 
-    Future<ItemData> fetchItem() async {
-      final response = await http.get(getItemUrl);
-
-      if (response.statusCode == 200){
-        //print(json.decode(response.body));
-        return ItemData.fromJson(json.decode(response.body));
-
-      } else{
-        throw Exception("Failed to load item");
-      }
-    }
-
-    Future<ItemData> futureItem = fetchItem();
-
-    Future<ItemPriceData> fetchItemPrice() async {
-      final response = await http.get("http://127.0.0.1:5000/api/v1/resources/prices/?id=66849");
-
-      if (response.statusCode == 200){
-        //print(json.decode(response.body));
-        return ItemPriceData.fromJson(json.decode(response.body));
-
-      } else{
-        throw Exception("Failed to load item");
-      }
-    }
-
-    Future<ItemPriceData> futureItemPrice = fetchItemPrice();
 
     return MaterialApp(
       title: "Superdry Price DB",
+      //onGenerateRoute: router.generateRoute,
+        initialRoute: '/home',
+        onGenerateRoute: FluroRouter.router.generator,
+        onUnknownRoute: (settings) => MaterialPageRoute(
+            builder: (context) => UndefinedView(
+              name: settings.name,
+            )
+        ),
+
+
+
+      /*
+      builder: (context, child) => LayoutTemplate(
+          child: child,
+      ),
+      \
+       */
+
+
       theme: ThemeData(
         //brightness: Brightness.dark,
        // primaryColor: Colors.blueGrey
@@ -58,7 +58,10 @@ class MyApp extends StatelessWidget {
              //hintStyle: TextStyle(color: Colors.black)
            )
       ),
-      home: Scaffold(
+
+      home: HomeView()//LayoutTemplate()
+
+      /*Scaffold(
         appBar: AppBar(  // becase materialApp is used appBar is created here.
           title: Text("SuperDry Price Database"), // title
           actions: <Widget>[
@@ -206,11 +209,13 @@ class MyApp extends StatelessWidget {
               )
               ]
           )
-        ),
+        ),*/
       
     );
   }
 }
+
+
 
 class ChartCard extends StatefulWidget{
   Future<ItemPriceData> futureItemPrice;
@@ -226,7 +231,7 @@ class _ChartCardState extends State<ChartCard> with SingleTickerProviderStateMix
   TabController _tabController;
   @override
   void initState(){
-    _tabController = new TabController(length: 4, vsync: this, initialIndex: 1);
+    _tabController = new TabController(length: 4, vsync: this, initialIndex: 0);
     super.initState();
   }
   @override
@@ -303,7 +308,7 @@ class _ChartCardState extends State<ChartCard> with SingleTickerProviderStateMix
             Expanded(
               child:TabBarView(
               children: <Widget>[
-                Image.asset("img/camelchart.png", fit: BoxFit.fitWidth,),
+                //Image.asset("img/camelchart.png", fit: BoxFit.fitWidth,),  // camelplaceholderimage
                 FutureBuilder<ItemPriceData>(
                   future: widget.futureItemPrice,
                   builder: (context, snapshot){
@@ -320,6 +325,17 @@ class _ChartCardState extends State<ChartCard> with SingleTickerProviderStateMix
                   builder: (context, snapshot){
                     if (snapshot.hasData){
                       return PriceHistoryChart(snapshot.data.item_price,90, true);
+                    } else if (snapshot.hasError){
+                      return Text("${snapshot.error}");
+                    }
+                    return CircularProgressIndicator();
+                  },
+                ),
+                FutureBuilder<ItemPriceData>(
+                  future: widget.futureItemPrice,
+                  builder: (context, snapshot){
+                    if (snapshot.hasData){
+                      return PriceHistoryChart(snapshot.data.item_price,180, true);
                     } else if (snapshot.hasError){
                       return Text("${snapshot.error}");
                     }
@@ -396,7 +412,7 @@ class DescriptionColumn extends StatelessWidget{
                         child: FlatButton(
                           color: Colors.black87,
                           hoverColor: Colors.white30,
-                          onPressed: () {print("pressed View at Superdry");},
+                          onPressed: () {print("pressed View at Superdry");Navigator.pushNamed(context, '/home');},
                           child: Text("View at SuperDry",
                           style: TextStyle(color: Colors.white),),)
                     ),
@@ -498,6 +514,10 @@ class PriceHistoryChart extends StatelessWidget {
   DateTime currentDate;
   int daysback;
   // PriceHistoryChart(this.seriesList, this.prices, {this.animate});
+  double lowprice;
+  var lowpricedate;
+  double highprice;
+  var highpricedate;
 
   PriceHistoryChart(List prices,int daysback, bool animate)
   {
@@ -525,62 +545,67 @@ class PriceHistoryChart extends StatelessWidget {
         new charts.RangeAnnotationSegment(
             currentDate.subtract(Duration(days: daysback)), currentDate, //new DateTime(currentDate.year, currentDate.month,currentDate.day),
             charts.RangeAnnotationAxisType.domain),
+        new charts.LineAnnotationSegment(findLowHighPrice(daysback), charts.RangeAnnotationAxisType.measure, startLabel: "\$${lowprice.toStringAsFixed(2)}", labelStyleSpec: charts.TextStyleSpec(color: charts.MaterialPalette.green.shadeDefault) ,color: charts.MaterialPalette.green.shadeDefault, dashPattern: [4, 4]),
+        new charts.LineAnnotationSegment(highprice, charts.RangeAnnotationAxisType.measure, endLabel: "\$${highprice.toStringAsFixed(2)}", labelStyleSpec: charts.TextStyleSpec(color:  charts.MaterialPalette.red.shadeDefault) ,color: charts.MaterialPalette.red.shadeDefault, dashPattern: [4, 4]),
       ]),
+      new charts.ChartTitle(" ",subTitle: "Lowest: \$${lowprice.toStringAsFixed(2)} (${new DateFormat.MMMd().format(lowpricedate)})                Highest: \$${highprice.toStringAsFixed(2)} (${new DateFormat.MMMd().format(highpricedate)})", subTitleStyleSpec: charts.TextStyleSpec(color: charts.MaterialPalette.gray.shadeDefault), behaviorPosition: charts.BehaviorPosition.bottom, titleOutsideJustification: charts.OutsideJustification.start),
     ]);
   }
-  
-  List<charts.Series<TimeSeriesPriceHistory, DateTime>> _loadPriceData() {
+    // TODO possibly add a selection Callback to chart to make selecting points dynamic https://google.github.io/charts/flutter/example/behaviors/selection_callback_example
 
-   List<TimeSeriesPriceHistory> data = [];
-    for (var i in prices){
-      // loops and creates TimeSeries Objects and places it in list
-      var dateClean = i[1].split(" ");
-      var day = dateClean[1];
-      var month = dateClean[2];
-      var year = dateClean[3];
+    // TODO need to add functionality for showing all date ranges
 
-      data.add(TimeSeriesPriceHistory(new DateTime( int.parse(year), monthconvert(month), int.parse(day)), i[0]));
+    List<charts.Series<TimeSeriesPriceHistory, DateTime>> _loadPriceData() {
+
+     List<TimeSeriesPriceHistory> data = [];
+
+      for (var i in prices){
+
+        var parsedDate = DateTime.parse(i[1]); // converts date string back to datetime object
+
+        data.add(TimeSeriesPriceHistory(new DateTime( parsedDate.year, parsedDate.month, parsedDate.day), i[0]));
+      }
+      return [
+          new charts.Series<TimeSeriesPriceHistory, DateTime>(
+              id: 'Prices ',
+              domainFn: (TimeSeriesPriceHistory prices, _) => prices.time,
+              measureFn: (TimeSeriesPriceHistory prices, _) => prices.price,
+              data: data
+          )
+        ];
     }
-    return [
-        new charts.Series<TimeSeriesPriceHistory, DateTime>(
-            id: 'Prices ',
-            domainFn: (TimeSeriesPriceHistory sales, _) => sales.time,
-            measureFn: (TimeSeriesPriceHistory sales, _) => sales.price,
-            data: data
-        )
-      ];
-    }
 
-    int monthconvert(String month) // helper method to convert month strings to ints
+    double findLowHighPrice(int daysprev)
     {
-      if (month == "Jan"){
-        return 1;
-      }
-      else if (month == "Feb"){
-        return 2;
-      }else if (month == "Mar"){
-        return 3;
-      }else if (month == "Apr"){
-        return 4;
-      }else if (month == "May"){
-        return 5;
-      }else if (month == "Jun"){
-        return 6;
-      }else if (month == "Jul"){
-        return 7;
-      }else if (month == "Aug"){
-        return 8;
-      }else if (month == "Sep"){
-        return 9;
-      }else if (month == "Oct"){
-        return 10;
-      }else if (month == "Nov"){
-        return 11;
-      }else if (month == "Dec"){
-        return 12;
-      }
-    }
+      // helper method to find low price and high price for low and high price calculations in graph
+      double lowestPrice = 99999999;
+      var lowestPriceDate;
+      double highestPrice = 0;
+      var highestPriceDate;
 
+      for (var i in prices)
+        {
+          if (DateTime.parse(i[1]).isAfter(currentDate.subtract(Duration(days: daysprev,))))
+            {
+              if (i[0] < lowestPrice)
+                {
+                  lowestPrice = i[0];
+                  lowestPriceDate = DateTime.parse(i[1]);
+                }
+              if (i[0] > highestPrice)
+                {
+                  highestPrice = i[0];
+                  highestPriceDate = DateTime.parse(i[1]);
+                }
+            }
+        }
+      this.lowprice = lowestPrice;
+      this.lowpricedate = lowestPriceDate; //new DateFormat.MMMd(lowestPriceDate);
+      this.highprice = highestPrice;
+      this.highpricedate = highestPriceDate;
+
+      return lowestPrice;
+    }
   }
 
   class TimeSeriesPriceHistory {
