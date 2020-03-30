@@ -1,10 +1,9 @@
 
-
-
-import 'package:colliecolliecollie/TopPriceDropsBox.dart';
-import 'package:colliecolliecollie/WelcomeBox.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'TopPriceDropsBox.dart';
+import 'WelcomeBox.dart';
 
 class HomeView extends StatelessWidget {
   @override
@@ -82,10 +81,50 @@ class HomeView extends StatelessWidget {
                     bottom: BorderSide(width: 1.0, color: Colors.black38)  // need to change this to fit theme
                 )
             ),
-            height: 35,
+            height: 50,
             alignment: Alignment(-0.95, -0.8),
-            child: Text("Top Price Drops Link",
-              style: TextStyle(fontSize: 20),),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Spacer(
+                  //flex: 5,
+                  //flex: 2,
+                  // width: 80,
+                ),
+                FlatButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, "/home");
+                  },
+                  color: Colors.black,
+                  hoverColor: Colors.deepOrangeAccent,
+                  child: Text("Top Price Drops",
+                    style: TextStyle(fontSize: 20, color: Colors.white),),
+                ),
+                Spacer(),
+                FlatButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, "/home");
+                  },
+                  color: Colors.black,
+                  hoverColor: Colors.deepOrangeAccent,
+                  child: Text("Features",
+                    style: TextStyle(fontSize: 20, color: Colors.white),),
+                ),
+                Spacer(),
+                FlatButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, "/home");
+                  },
+                  color: Colors.black,
+                  hoverColor: Colors.deepOrangeAccent,
+                  child: Text("About",
+                    style: TextStyle(fontSize: 20, color: Colors.white),),
+                ),
+                Spacer(flex: 100,),
+                Spacer(),
+
+              ],
+            )
           ),
 
           WelcomeBox(),
