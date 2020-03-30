@@ -1,18 +1,21 @@
 import 'dart:convert';
 
-import 'package:colliecolliecollie/ItemPage.dart';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import 'main.dart';
+import '../main.dart';
+import 'ItemPage.dart';
 
 class LayoutTemplate extends StatelessWidget {
   final Widget child;
   final String item;
   const LayoutTemplate(this.item, {Key key, this.child}) : super(key: key);
 
-
+String urlToRoute(String url){
+  
+}
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +23,14 @@ class LayoutTemplate extends StatelessWidget {
     return Scaffold(
 
         appBar: AppBar(// becase materialApp is used appBar is created here.
-            title: Text("SuperDry Price Database"),// title
+            title: //Text("SuperDry Price Database"),
+                FlatButton(
+                    hoverColor: Colors.deepOrangeAccent,
+                    onPressed: () {
+                  Navigator.pushNamed(context, "/home");
+                },
+                    child: Text("SuperDry Price Database",
+                    style: TextStyle(color: Colors.white, fontSize: 19),),),// title
             actions: <Widget>[
               Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -35,7 +45,8 @@ class LayoutTemplate extends StatelessWidget {
                             obscureText: false,
                             onTap: () {},
                             onSubmitted: (String urlString) {
-                              print(urlString);
+                              Navigator.pushNamed(context, urlString.substring(urlString.indexOf("us")));
+                              //print(urlString.substring(urlString.indexOf("us")));
                             }, // get the value
                             decoration: InputDecoration(
                                 labelText: 'Enter SuperDry URL to find product',
@@ -74,7 +85,7 @@ class LayoutTemplate extends StatelessWidget {
               )
             ]
         ),
-        body: ItemPage(item) //child
+        body: ItemPage(item)//child
     );
   }
 }
