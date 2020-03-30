@@ -1,6 +1,7 @@
-import 'package:colliecolliecollie/ItemPage.dart';
-import 'package:colliecolliecollie/LayoutTemplate.dart';
-import 'package:colliecolliecollie/Views.dart';
+
+import 'package:colliecolliecollie/HomePage/HomeView.dart';
+import 'package:colliecolliecollie/ItemPage/ItemPage.dart';
+import 'package:colliecolliecollie/ItemPage/LayoutTemplate.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -31,7 +32,7 @@ class FluroRouter {
   );
 
   static Handler _loginHandler = Handler (
-    handlerFunc: (BuildContext context, Map<String, dynamic> params) => LoginView()
+    //handlerFunc: (BuildContext context, Map<String, dynamic> params) => LoginView()
   );
 
 
