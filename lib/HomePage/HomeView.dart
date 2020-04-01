@@ -1,11 +1,23 @@
 
+import 'package:colliecolliecollie/Widgets/NotificationForm.dart';
+import 'package:colliecolliecollie/Widgets/NotificationFormAnimatedContainer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'TopPriceDropsBox.dart';
 import 'WelcomeBox.dart';
 
-class HomeView extends StatelessWidget {
+
+
+class HomeView extends StatefulWidget{
+  @override
+  HomeViewState createState() => HomeViewState();
+}
+
+
+class HomeViewState extends State<HomeView> {
+  final GlobalKey<NotificationFormAnimatedContainerState> _notificationFormAnimatedContainerState = GlobalKey<NotificationFormAnimatedContainerState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,11 +62,16 @@ class HomeView extends StatelessWidget {
                           hoverColor: Colors.deepOrangeAccent,
                           onPressed: () {
                             print("pressed sign up");
+
+                            _notificationFormAnimatedContainerState.currentState.opencloseform();
+
                           },
-                          child: Text("Sign Up",
+                          child: Text("Get Notified",
                             style: TextStyle(color: Colors.white),),
                         ),
-                        FlatButton(
+
+
+                        /*FlatButton(
                           hoverColor: Colors.deepOrangeAccent,
                           onPressed: () {
                             print("pressed log in");
@@ -62,6 +79,8 @@ class HomeView extends StatelessWidget {
                           child: Text("Log in",
                             style: TextStyle(color: Colors.white),),
                         )
+
+                         */
                       ],
                     ),
                   ),
@@ -72,7 +91,10 @@ class HomeView extends StatelessWidget {
             )
           ]
       ),
-      body: ListView(
+      body: Stack(
+      children: <Widget>[
+
+      ListView(
         //padding: const EdgeInsets.only(left: 30, right: 30),
         children: <Widget>[
           Container(
@@ -130,8 +152,15 @@ class HomeView extends StatelessWidget {
           WelcomeBox(),
           Divider(),
           TopPriceDropsBox(),
+
         ],
-      )
-    );
+      ),
+        Align(
+          alignment: Alignment.topRight,
+
+          child: NotificationFormAnimatedContainer(key: _notificationFormAnimatedContainerState),
+          ),
+
+    ]));
   }
 }
