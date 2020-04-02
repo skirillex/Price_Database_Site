@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class NotificationForm extends StatefulWidget{
@@ -40,7 +41,6 @@ class _SignUpFormState extends State<SignUpForm>
   AnimationController animationController;
   Animation<Color> colorAnimation;
 
-
   bool _formCompleted = false;
 
   @override
@@ -71,13 +71,8 @@ class _SignUpFormState extends State<SignUpForm>
 
 
 
-  /*
-  void _showWelcomeScreen(){
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => WelcomeScreen()));
-  }
 
-   */
+
 
 
 
@@ -145,22 +140,7 @@ class _SignUpFormState extends State<SignUpForm>
 
           },
         ),
-        Container(
-          height: 40,
-          width: double.infinity,
-          margin: EdgeInsets.all(12),
-          child: FlatButton(
-            color: Colors.blue,
-            textColor: Colors.white,
-            // STEP 1: Add a callback here and navigate to
-            // the welcome screen when the button is tapped.
-            /*
-            onPressed: _formCompleted ? _showWelcomeScreen : null,
 
-             */
-            child: Text('Sign up'),
-          ),
-        ),
       ],
     );
   }
@@ -180,11 +160,11 @@ class SignUpFormBody extends StatefulWidget {
 class _SignUpFormBodyState extends State<SignUpFormBody> {
   static const EdgeInsets padding = EdgeInsets.all(8);
   final TextEditingController emailController = TextEditingController();
-  final TextEditingController phoneController = TextEditingController();
-  final TextEditingController websiteController = TextEditingController();
+  final TextEditingController itemUrlController = TextEditingController();
+  final TextEditingController priceController = TextEditingController();
 
   List<TextEditingController> get controllers =>
-      [emailController, phoneController, websiteController];
+      [emailController, itemUrlController, priceController];
 
   @override
   void initState() {
@@ -206,31 +186,101 @@ class _SignUpFormBodyState extends State<SignUpFormBody> {
     widget.onProgressChanged(_formProgress);
   }
 
+  /*
+  void _showWelcomeScreen(){
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => WelcomeScreen()));
+  }
+
+   */
+
+  bool isVisible = true;
+
+
   @override
   Widget build(BuildContext context) {
+
     return Padding(
       padding: padding,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: padding,
-            child: Text('Create a Price Watch', style: Theme.of(context).textTheme.display1),
+      child:
+          AnimatedSwitcher(
+            duration: const Duration(seconds: 1),
+            child: isVisible
+            ? Column(
+                children: <Widget> [
+                  Padding(
+                    padding: padding,
+                    child: Text('Create a Price Watch', style: Theme.of(context).textTheme.display1),
+                  ),
+                  SignUpField(
+                    hintText: 'E-mail address',
+                    controller: emailController,
+                  ),
+                  SignUpField(
+                    hintText: 'Item url',
+                    controller: itemUrlController,
+                  ),
+                  SignUpField(
+                    hintText: 'Price to notify',
+                    controller: priceController,
+                  ),
+                  Container(
+                    height: 40,
+                    width: double.infinity,
+                    margin: EdgeInsets.all(12),
+                    child: RaisedButton(
+                      color: Colors.black,
+                      hoverColor: Colors.deepOrange,
+                      textColor: Colors.white,
+                      // STEP 1: Add a callback here and navigate to
+                      // the welcome screen when the button is tapped.
+                      /*
+            onPressed: _formCompleted ? _showWelcomeScreen : null,
+
+             */
+                      child: Text('Track!'),
+                      onPressed: (){ print(emailController.text); print(itemUrlController.text); print(priceController.text);
+                        setState(() {isVisible = !isVisible;});},  // _showWelcomeScreen
+                    ),
+                  ),
+                ])
+                : Align(
+              alignment: Alignment.center,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    height: 80,
+                  ),
+                  Align(
+                    alignment: Alignment.center,
+                    child:
+                  Container(
+                    height: 50,
+                    child: Text("Success!", style: Theme.of(context).textTheme.display1,))
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child:
+                      RaisedButton(
+                        color: Colors.black,
+                        textColor: Colors.white,
+                        hoverColor: Colors.deepOrange,
+
+                        child: Text("Another one"),
+                        onPressed: () {setState(() {
+                          isVisible = !isVisible;
+                        });},
+                      )
+                    )
+                ],
+              ),
+            )
           ),
-          SignUpField(
-            hintText: 'E-mail address',
-            controller: emailController,
-          ),
-          SignUpField(
-            hintText: 'Item url',
-            controller: phoneController,
-          ),
-          SignUpField(
-            hintText: 'Price to notify',
-            controller: websiteController,
-          ),
-        ],
-      ),
+
+
+
     );
   }
 }
