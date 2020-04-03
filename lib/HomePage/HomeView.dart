@@ -1,5 +1,4 @@
 
-import 'package:colliecolliecollie/Widgets/NotificationForm.dart';
 import 'package:colliecolliecollie/Widgets/NotificationFormAnimatedContainer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +19,13 @@ class HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
+    String buttonTextClosed = "Get Notified";
+    String buttonTextOpen = "Close";
+    bool openFlag = false;
+
+    String buttonText = buttonTextClosed;
+
+
     return Scaffold(
       appBar: AppBar(// becase materialApp is used appBar is created here.
           title: //Text("SuperDry Price Database"),
@@ -59,15 +65,25 @@ class HomeViewState extends State<HomeView> {
                     child: ButtonBar(
                       children: <Widget>[
                         FlatButton(
+                          child: Text(buttonText,
+                            style: TextStyle(color: Colors.white),),
                           hoverColor: Colors.deepOrangeAccent,
                           onPressed: () {
                             print("pressed sign up");
 
                             _notificationFormAnimatedContainerState.currentState.opencloseform();
-
+                            setState(() {
+                              if (openFlag == false)
+                                {
+                                  buttonText = buttonTextClosed;
+                                  openFlag = !openFlag;
+                                }
+                              else{
+                                buttonText = buttonTextOpen;
+                                openFlag = !openFlag;
+                              }});
                           },
-                          child: Text("Get Notified",
-                            style: TextStyle(color: Colors.white),),
+
                         ),
 
 
