@@ -2,9 +2,9 @@
 
 import 'dart:math';
 
+import 'package:colliecolliecollie/Widgets/GetNotifiedForm.dart';
 import 'package:flutter/material.dart';
 
-import 'NotificationForm.dart';
 
 class NotificationFormAnimatedContainer extends StatefulWidget{
   NotificationFormAnimatedContainer({Key  key}) : super(key:key);
@@ -39,7 +39,7 @@ class NotificationFormAnimatedContainerState extends State<NotificationFormAnima
         child:
         Card(
           elevation: 8,
-          child: NotificationForm()
+          child: GetNotifiedForm()//NotificationForm()
         ),
       ),
     );
@@ -52,7 +52,7 @@ class NotificationFormAnimatedContainerState extends State<NotificationFormAnima
     setState(() {
 
       if ( open == false) {
-        height = 400;
+        height = 450;
         open = true;
       }
       else
