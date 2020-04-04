@@ -104,6 +104,7 @@ class GetNotifiedFormState extends State<GetNotifiedForm>
     }
   }
 
+  bool isSwitched = false;
 
   @override
   Widget build(BuildContext context) {
@@ -155,26 +156,64 @@ class GetNotifiedFormState extends State<GetNotifiedForm>
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.all(8),
+                            padding: EdgeInsets.only(left: 8, right: 8, top: 8,),
                             child: TextFormField(
+                              enabled: !isSwitched,
+                              style: TextStyle(color: isSwitched ? Colors.white : Colors.black),
                               validator: (val) =>
-                                  isValidPrice(val) ? 'Please enter a price' : null,
+                                  isValidPrice(val)  ? 'Please enter a price' : null,
                               decoration:
                                   InputDecoration(hintText: "Price to notify", icon: Icon(Icons.attach_money)),
                               controller: priceController,
                               inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
                             ),
                           ),
-                          Container(
-                            height: 40,
-                            width: double.infinity,
-                            margin: EdgeInsets.all(12),
-                            child: RaisedButton(
-                              color: Colors.black,
-                              hoverColor: Colors.deepOrange,
-                              textColor: Colors.white,
-                              child: Text('Track!'),
-                              onPressed: _submitForm // _showWelcomeScreen
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: Padding(
+                              padding: EdgeInsets.only(right: 8),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: EdgeInsets.only(right: 2),
+                                    child: Text("Any Price Lower", style: Theme.of(context).textTheme.display1.merge(TextStyle(fontSize: 12)),),
+                                  ),
+                                  Switch(
+                                    activeColor: Colors.deepOrange,
+                                    value: isSwitched,
+                                    onChanged: (value){
+                                      setState(() {
+                                        isSwitched = value;
+                                        if (isSwitched == true)
+                                          {
+                                            priceController.text = "0000";
+                                          }
+                                        else
+                                          {
+                                            priceController.text = "";
+                                          }
+                                      });
+                                    },
+
+                                  ),
+                                ],
+                              )
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.bottomCenter,
+                            child: Container(
+                              height: 40,
+                              width: double.infinity,
+                              margin: EdgeInsets.only(top:2,right: 12, bottom: 12, left: 12),//all(12),
+                              child: RaisedButton(
+                                  color: Colors.black,
+                                  hoverColor: Colors.deepOrange,
+                                  textColor: Colors.white,
+                                  child: Text('Track!'),
+                                  onPressed: _submitForm // _showWelcomeScreen
+                              ),
                             ),
                           ),
                           Container(
@@ -211,6 +250,10 @@ class GetNotifiedFormState extends State<GetNotifiedForm>
                                     onPressed: () {
                                       setState(() {
                                         isVisible = !isVisible;
+                                        emailController.clear();
+                                        priceController.clear();
+                                        itemUrlController.clear();
+                                        errormessage = "";
                                       });
                                     },
                                   ))

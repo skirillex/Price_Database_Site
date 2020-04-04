@@ -33,7 +33,7 @@ class NotificationFormAnimatedContainerState extends State<NotificationFormAnima
         borderRadius: _borderRadius,
       ),
       duration: Duration(milliseconds: 300),
-      curve: Curves.easeInOutSine,
+      curve: Curves.easeInOut,
       child: Padding(
         padding: EdgeInsets.fromLTRB(0,0, 30,0),
         child:
@@ -52,7 +52,7 @@ class NotificationFormAnimatedContainerState extends State<NotificationFormAnima
     setState(() {
 
       if ( open == false) {
-        height = 450;
+        height = 480;
         open = true;
       }
       else
