@@ -124,7 +124,7 @@ class GetNotifiedFormState extends State<GetNotifiedForm>
           ),
 
            */
-          Padding(
+          Padding( 
               padding: padding,
               child: AnimatedSwitcher(
                   duration: const Duration(seconds: 1),
@@ -135,39 +135,48 @@ class GetNotifiedFormState extends State<GetNotifiedForm>
                             child: Text('Create a Price Watch',
                                 style: Theme.of(context).textTheme.display1),
                           ),
-                          Padding(
-                            padding: EdgeInsets.all(8),
-                            child: TextFormField(
-                              validator: (val) =>
-                                  isValidEmail(val) ? null : 'Please enter a valid email address',
-                              decoration:
-                                  InputDecoration(hintText: 'E-mail address', icon: Icon(Icons.email)),
-                              controller: emailController,
+                          Container(
+                            height: 80,
+                            child: Padding(
+                              padding: EdgeInsets.all(8),
+                              child: TextFormField(
+                                validator: (val) =>
+                                isValidEmail(val) ? null : 'Please enter a valid email address',
+                                decoration:
+                                InputDecoration(hintText: 'E-mail address', icon: Icon(Icons.email)),
+                                controller: emailController,
+                              ),
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.all(8),
-                            child: TextFormField(
-                              validator: (val) => isValidWebsite(val)
-                                  ? null
-                                  : 'Enter a valid Superdry URL',
-                              decoration: InputDecoration(hintText: 'Item url', icon: Icon(Icons.web)),
-                              controller: itemUrlController,
+                          Container(
+                            height: 80,
+                            child: Padding(
+                              padding: EdgeInsets.all(8),
+                              child: TextFormField(
+                                validator: (val) => isValidWebsite(val)
+                                    ? null
+                                    : 'Enter a valid Superdry URL',
+                                decoration: InputDecoration(hintText: 'Item url', icon: Icon(Icons.web)),
+                                controller: itemUrlController,
+                              ),
                             ),
                           ),
+                          Container(
+                            height: 80,
+                              child:
                           Padding(
                             padding: EdgeInsets.only(left: 8, right: 8, top: 8,),
                             child: TextFormField(
                               enabled: !isSwitched,
                               style: TextStyle(color: isSwitched ? Colors.white : Colors.black),
                               validator: (val) =>
-                                  isValidPrice(val)  ? 'Please enter a price' : null,
+                              isValidPrice(val)  ? 'Please enter a price' : null,
                               decoration:
-                                  InputDecoration(hintText: "Price to notify", icon: Icon(Icons.attach_money)),
+                              InputDecoration(hintText: "Price to notify", icon: Icon(Icons.attach_money)),
                               controller: priceController,
                               inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
                             ),
-                          ),
+                          ),),
                           Align(
                             alignment: Alignment.centerRight,
                             child: Padding(
