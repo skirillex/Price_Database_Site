@@ -63,13 +63,14 @@ class HomeViewState extends State<HomeView> {
                     width: 200,
                     //margin: EdgeInsets.all(10),
                     child: ButtonBar(
+                      buttonMinWidth: 300,
                       children: <Widget>[
                         FlatButton(
                           child: Text(buttonText,
-                            style: TextStyle(color: Colors.white),),
+                            style: Theme.of(context).textTheme.display1.merge(TextStyle(color: Colors.white, )), textScaleFactor: .6,),
                           hoverColor: Colors.deepOrangeAccent,
                           onPressed: () {
-                            print("pressed sign up");
+                            print("pressed Get Notified");
 
                             _notificationFormAnimatedContainerState.currentState.opencloseform();
                             setState(() {
@@ -86,17 +87,6 @@ class HomeViewState extends State<HomeView> {
 
                         ),
 
-
-                        /*FlatButton(
-                          hoverColor: Colors.deepOrangeAccent,
-                          onPressed: () {
-                            print("pressed log in");
-                          },
-                          child: Text("Log in",
-                            style: TextStyle(color: Colors.white),),
-                        )
-
-                         */
                       ],
                     ),
                   ),
