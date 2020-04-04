@@ -7,11 +7,22 @@ import 'package:http/http.dart' as http;
 
 import '../main.dart';
 import 'ItemPage.dart';
+import 'package:colliecolliecollie/Widgets/NotificationFormAnimatedContainer.dart';
 
-class LayoutTemplate extends StatelessWidget {
-  final Widget child;
+class LayoutTemplate extends StatefulWidget {
+
   final String item;
-  const LayoutTemplate(this.item, {Key key, this.child}) : super(key: key);
+
+  const LayoutTemplate(this.item, {Key key}) : super(key: key);
+
+  @override
+  LayoutTemplateState createState() => LayoutTemplateState();
+}
+
+class LayoutTemplateState extends State<LayoutTemplate>
+{
+
+  final GlobalKey<NotificationFormAnimatedContainerState> _notificationFormAnimatedContainerState = GlobalKey<NotificationFormAnimatedContainerState>();
 
 String urlToRoute(String url){
   
@@ -57,25 +68,21 @@ String urlToRoute(String url){
                     Container( // container to hold the signup and login buttons
                       width: 200,
                       //margin: EdgeInsets.all(10),
-                      child: ButtonBar(
+                      child: ButtonBar( buttonMinWidth: 300,
                         children: <Widget>[
                           FlatButton(
+                            child: Text("Get Notified",
+                              style: Theme.of(context).textTheme.display1.merge(TextStyle(color: Colors.white, )), textScaleFactor: .6,),
                             hoverColor: Colors.deepOrangeAccent,
                             onPressed: () {
-                              print("pressed sign up");
-                            },
-                            child: Text("Sign Up",
-                              style: TextStyle(color: Colors.white),),
-                          ),
-                          FlatButton(
-                            hoverColor: Colors.deepOrangeAccent,
-                            onPressed: () {
-                              print("pressed log in");
-                            },
-                            child: Text("Log in",
-                              style: TextStyle(color: Colors.white),),
-                          )
-                        ],
+                              print("pressed Get Notified");
+
+                              _notificationFormAnimatedContainerState
+                                  .currentState.opencloseform();
+                              setState(() {},
+
+                              );
+                            })],
                       ),
                     ),
                     Container(
@@ -85,7 +92,17 @@ String urlToRoute(String url){
               )
             ]
         ),
-        body: ItemPage(item)//child
+        body: Stack(
+          children: <Widget>[
+            ItemPage(widget.item),
+            Align(
+              alignment: Alignment.topRight,
+              child: NotificationFormAnimatedContainer(key: _notificationFormAnimatedContainerState,),
+            )
+          ],
+        )//child
     );
   }
+
+
 }
