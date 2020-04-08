@@ -63,7 +63,7 @@ class _ItemPageState extends State<ItemPage> {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      //SingleChildScrollView(
+        //SingleChildScrollView(
 
         padding: const EdgeInsets.all(8),
         //physics: const ScrollPhysics(),
@@ -79,16 +79,16 @@ class _ItemPageState extends State<ItemPage> {
                               width: 1.0,
                               color: Colors
                                   .black38) // need to change this to fit theme
-                      )),
+                          )),
                   height: 47,
                   alignment: Alignment.center, //Alignment(-0.95, -0.8),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       Spacer(
-                        // flex: 5,
-                        // width: 80,
-                      ),
+                          // flex: 5,
+                          // width: 80,
+                          ),
                       FlatButton(
                         onPressed: () {
                           Navigator.pushNamed(context, "/home");
@@ -103,7 +103,7 @@ class _ItemPageState extends State<ItemPage> {
                       Spacer(),
                       FlatButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, "/home");
+                          Navigator.pushNamed(context, "/features");
                         },
                         color: Colors.black,
                         hoverColor: Colors.deepOrangeAccent,
@@ -183,15 +183,14 @@ class _ItemPageState extends State<ItemPage> {
                             ])),
                     Align(
                       alignment: Alignment.centerRight,
-
-                          child: Column(
-                            children: <Widget>[
-                              Container(
-                                height: 165,
-                              ),
-                              PriceColumn("2020-03-09", futureItemPrice),
-                            ],
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            height: 165,
                           ),
+                          PriceColumn("2020-03-09", futureItemPrice),
+                        ],
+                      ),
                     )
                   ],
                 ),
@@ -200,12 +199,12 @@ class _ItemPageState extends State<ItemPage> {
           ),
           Divider(
             height: 20,
-            color: Colors.black,
+            color: Colors.white,
           ),
           PriceWatch(widget.itemId),
           Divider(
             height: 20,
-            color: Colors.black,
+            color: Colors.white,
           ),
           Align(
             alignment: Alignment.center,

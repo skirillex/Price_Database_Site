@@ -67,13 +67,14 @@ class _TopPriceDropItemsState extends State<TopPriceDropItems>{
                     return Column(
                       children: <Widget>[
                         TpdGetImageHelperClass(productid),
-                        Divider(),
+                        Divider(color: Colors.white),
                         TpdGetItemNameAndLinkHelperClass(productid),
-                        Divider(),
+                        Divider(color: Colors.white),
                         Text("\$${itemdataprice[7].toStringAsFixed(2)}", style: TextStyle(color: Colors.deepOrange, fontSize: 25, fontWeight: FontWeight.bold),),
                         Text("Previous price: \$"+itemdataprice[3].toStringAsFixed(2)),
-                        Divider(),
+                        Divider(color: Colors.white,),
                         RaisedButton(color: Colors.black,
+                        hoverColor: Colors.deepOrange,
                         onPressed: () {
                             Navigator.pushNamed(context, "us/searching/the/price/$productid/db");
                               },

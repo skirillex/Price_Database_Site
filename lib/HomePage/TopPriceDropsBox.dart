@@ -52,29 +52,17 @@ class _TopPriceDropsBoxState extends State<TopPriceDropsBox> with SingleTickerPr
       child: Column(
         children: <Widget>[
           Container(
-            height: 60,
+            height: 50,
             width: 900,
-            child: Center(
-              child: Row(
-                children: <Widget>[
-
-
-                  Text("Top Price Drops", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),)
-
-                  // I personally really like these button close together on top, as this code will do
-                  /*
-                  RaisedButton(
-                    child: Text("left"),
-                    onPressed: _moveLeft,
-                  ),
-                  RaisedButton(
-                    child: Text("right"),
-                    onPressed: _moveRight,
-                  )
-                   */
-                ],
+            child:  Card(
+                elevation: 4,
+                color: Colors.deepOrange,
+                child: Padding(
+                  padding: EdgeInsets.all(6),
+                  child: Text("Top Price Drops", style: Theme.of(context).textTheme.display1.merge(TextStyle(fontSize: 26, color: Colors.white))),
+                ),
               ),
-            )
+
           ),
 
           Center(
