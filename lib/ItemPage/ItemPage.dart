@@ -1,5 +1,3 @@
-
-
 import 'dart:convert';
 
 import 'package:colliecolliecollie/Api/ItemData.dart';
@@ -14,9 +12,9 @@ import '../main.dart';
 import 'ChartCard.dart';
 import 'DescriptionColumn.dart';
 import 'PriceColumn.dart';
+import 'PriceWatch.dart';
 
-
-class ItemPage extends StatefulWidget{
+class ItemPage extends StatefulWidget {
   String itemId;
 
   ItemPage(this.itemId);
@@ -25,24 +23,21 @@ class ItemPage extends StatefulWidget{
   _ItemPageState createState() => _ItemPageState();
 }
 
-
-
-class _ItemPageState extends State<ItemPage>{
-
+class _ItemPageState extends State<ItemPage> {
   String getItemUrl;
   Future<ItemData> futureItem;
   Future<ItemPriceData> futureItemPrice;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     this.futureItem = fetchItem();
     this.futureItemPrice = fetchItemPrice();
-
   }
 
   Future<ItemData> fetchItem() async {
-    final response = await http.get("http://127.0.0.1:5000/api/v1/resources/items/?id=${widget.itemId}");
+    final response = await http.get(
+        "http://127.0.0.1:5000/api/v1/resources/items/?id=${widget.itemId}");
 
     if (response.statusCode == 200) {
       //print(json.decode(response.body));
@@ -51,6 +46,7 @@ class _ItemPageState extends State<ItemPage>{
       throw Exception("Failed to load item");
     }
   }
+
   Future<ItemPriceData> fetchItemPrice() async {
     final response = await http.get(
         "http://127.0.0.1:5000/api/v1/resources/prices/?id=${widget.itemId}");
@@ -65,132 +61,148 @@ class _ItemPageState extends State<ItemPage>{
   }
 
   @override
-  Widget build(BuildContext context){
-
-    return ListView( //SingleChildScrollView(
+  Widget build(BuildContext context) {
+    return ListView(
+      //SingleChildScrollView(
 
         padding: const EdgeInsets.all(8),
         //physics: const ScrollPhysics(),
         dragStartBehavior: DragStartBehavior.down,
-
         children: <Widget>[
-          Column( // this column and container builds and holds the links bar underneath the appbar
+          Column(
+            // this column and container builds and holds the links bar underneath the appbar
             children: <Widget>[
               Container(
-                decoration: const BoxDecoration(
-                    border: Border(
-                        bottom: BorderSide(width: 1.0, color: Colors.black38)  // need to change this to fit theme
-                    )
-                ),
-                height: 47,
-                alignment: Alignment.center,//Alignment(-0.95, -0.8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Spacer(
-                     // flex: 5,
-                      // width: 80,
-                    ),
-                    FlatButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, "/home");
-                      },
-                      color: Colors.black,
-                      hoverColor: Colors.deepOrangeAccent,
-                      child: Text("Top Price Drops",
-                        style: TextStyle(fontSize: 20, color: Colors.white),),
-                    ),
-                    Spacer(),
-                    FlatButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, "/home");
-                      },
-                      color: Colors.black,
-                      hoverColor: Colors.deepOrangeAccent,
-                      child: Text("Features",
-                        style: TextStyle(fontSize: 20, color: Colors.white),),
-                    ),
-                    Spacer(),
-                    FlatButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, "/home");
-                      },
-                      color: Colors.black,
-                      hoverColor: Colors.deepOrangeAccent,
-                      child: Text("About",
-                        style: TextStyle(fontSize: 20, color: Colors.white),),
-                    ),
-                    Spacer(flex: 50,),
-                    Spacer(),
-
-                  ],
-                )
-              ),
+                  decoration: const BoxDecoration(
+                      border: Border(
+                          bottom: BorderSide(
+                              width: 1.0,
+                              color: Colors
+                                  .black38) // need to change this to fit theme
+                      )),
+                  height: 47,
+                  alignment: Alignment.center, //Alignment(-0.95, -0.8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Spacer(
+                        // flex: 5,
+                        // width: 80,
+                      ),
+                      FlatButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, "/home");
+                        },
+                        color: Colors.black,
+                        hoverColor: Colors.deepOrangeAccent,
+                        child: Text(
+                          "Top Price Drops",
+                          style: TextStyle(fontSize: 20, color: Colors.white),
+                        ),
+                      ),
+                      Spacer(),
+                      FlatButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, "/home");
+                        },
+                        color: Colors.black,
+                        hoverColor: Colors.deepOrangeAccent,
+                        child: Text(
+                          "Features",
+                          style: TextStyle(fontSize: 20, color: Colors.white),
+                        ),
+                      ),
+                      Spacer(),
+                      FlatButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, "/home");
+                        },
+                        color: Colors.black,
+                        hoverColor: Colors.deepOrangeAccent,
+                        child: Text(
+                          "About",
+                          style: TextStyle(fontSize: 20, color: Colors.white),
+                        ),
+                      ),
+                      Spacer(
+                        flex: 50,
+                      ),
+                      Spacer(),
+                    ],
+                  )),
               Container(
                 height: 10,
               )
             ],
           ),
-          Container( // this container creates some padding between link bar above and content below
+          Container(
+            // this container creates some padding between link bar above and content below
             height: 30,
           ),
           Center(
-    child:
-          SizedBox(
-            height: 289,
-            width: 800,
+            child: SizedBox(
+              height: 286,
+              width: 800,
+              child: Card(
+                elevation: 4,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Flexible(
+                        child: Container(
+                            alignment: Alignment.centerLeft,
+                            height: 300,
+                            width: 270,
+                            child: FutureBuilder<ItemData>(
+                              future: futureItem,
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  return Image.network(snapshot.data
+                                      .img_url); //Text(snapshot.data.name);
+                                } else if (snapshot.hasError) {
+                                  return Text("${snapshot.error}");
+                                }
+                                return CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                      Colors.deepOrange),
+                                );
+                              },
+                            ))),
+                    Flexible(
+                        flex: 2,
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Container(
+                                height: 100,
+                                alignment: Alignment.center,
+                              ),
+                              DescriptionColumn(futureItem)
+                            ])),
+                    Align(
+                      alignment: Alignment.centerRight,
 
-            child: Card(
-              elevation: 4,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Flexible(
-                      child: Container(
-                        alignment: Alignment.centerLeft,
-                          height: 300,
-                          width: 270,
-                          child: FutureBuilder<ItemData>(
-                            future: futureItem,
-                            builder: (context, snapshot){
-                              if (snapshot.hasData){
-                                return Image.network(snapshot.data.img_url);  //Text(snapshot.data.name);
-                              } else if (snapshot.hasError){
-                                return Text("${snapshot.error}");
-                              }
-                              return CircularProgressIndicator( valueColor: AlwaysStoppedAnimation<Color>(Colors.deepOrange),);
-                            },
-                          )
-                      )
-                  ),
-                  Flexible(
-                      flex: 2,
-                      child:Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Container(
-                              height: 100,
-                              alignment: Alignment.center,
-                            ),
-                            DescriptionColumn(futureItem)
-                          ]
-                      )
-                  ),
-                  Flexible(
-                      flex: 0,
-                      child: Column(
-                        children: <Widget>[
-                          Container(
-                            height: 165,
+                          child: Column(
+                            children: <Widget>[
+                              Container(
+                                height: 165,
+                              ),
+                              PriceColumn("2020-03-09", futureItemPrice),
+                            ],
                           ),
-                          PriceColumn("2020-03-09",futureItemPrice),
-                        ],
-                      )
-                  )
-                ],
-              ),),),),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Divider(
+            height: 20,
+            color: Colors.black,
+          ),
+          PriceWatch(widget.itemId),
           Divider(
             height: 20,
             color: Colors.black,
@@ -199,7 +211,6 @@ class _ItemPageState extends State<ItemPage>{
             alignment: Alignment.center,
             child: ChartCard(futureItemPrice),
           )
-        ]
-    );
+        ]);
   }
 }

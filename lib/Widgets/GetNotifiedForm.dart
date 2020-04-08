@@ -29,7 +29,7 @@ class GetNotifiedFormState extends State<GetNotifiedForm>
   void initState() {
     super.initState();
 
-  } // containts animation controller tween
+  }
 
   double get _formProgress {
     var progress = 0.0;
@@ -124,7 +124,7 @@ class GetNotifiedFormState extends State<GetNotifiedForm>
           ),
 
            */
-          Padding( 
+          Padding(
               padding: padding,
               child: AnimatedSwitcher(
                   duration: const Duration(seconds: 1),
