@@ -25,8 +25,8 @@ class DescriptionColumn extends StatelessWidget{
               future: futureItem,
               builder: (context, snapshot){
                 if (snapshot.hasData){
-                  return SelectableText(snapshot.data.name,
-                    style: TextStyle(fontSize: 25.0),);
+                  return SelectableText("  "+snapshot.data.name,
+                    style: Theme.of(context).textTheme.display1.merge(TextStyle(fontSize: 25)),);
                 } else if (snapshot.hasError){
                   return Text("${snapshot.error}");
                 }
@@ -41,7 +41,7 @@ class DescriptionColumn extends StatelessWidget{
                 future: futureItem,
                 builder: (context, snapshot){
                   if (snapshot.hasData){
-                    return Text(capitalize(snapshot.data.url.split("\/")[3]), textAlign: TextAlign.left,); // this returns the category of the item, found in item url
+                    return Text("    "+capitalize(snapshot.data.url.split("\/")[3]), style: Theme.of(context).textTheme.display1.merge(TextStyle(fontSize: 15)), textAlign: TextAlign.left,); // this returns the category of the item, found in item url
                   } else if (snapshot.hasError){
                     return Text("${snapshot.error}");
                   }
@@ -62,9 +62,9 @@ class DescriptionColumn extends StatelessWidget{
                       future: futureItem,
                       builder: (context, snapshot){
                         return // this returns the category of the item, found in item url
-                          FlatButton(
+                          RaisedButton(
                             color: Colors.black87,
-                            hoverColor: Colors.white30,
+                            hoverColor: Colors.deepOrange,
                             onPressed: () {print("pressed View at Superdry");url.launch("https://www.superdry.com"+snapshot.data.url);},
                             child: Text("View at SuperDry",
                               style: TextStyle(color: Colors.white),),);
