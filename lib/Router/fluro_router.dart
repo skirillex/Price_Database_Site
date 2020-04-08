@@ -1,4 +1,5 @@
 
+import 'package:colliecolliecollie/FeaturesPage/FeaturesPage.dart';
 import 'package:colliecolliecollie/HomePage/HomeView.dart';
 import 'package:colliecolliecollie/ItemPage/ItemPage.dart';
 import 'package:colliecolliecollie/ItemPage/LayoutTemplate.dart';
@@ -16,6 +17,7 @@ class FluroRouter {
     router.define("/home", handler: _homeHandler);
     router.define("/login", handler: _loginHandler);
     router.define("us/:gender/:itemcategory/:details/:id/:itemdesc", handler: _itemUrlHandler);
+    router.define("/features", handler: _featuresHandler);
 
   }
 
@@ -33,6 +35,10 @@ class FluroRouter {
 
   static Handler _loginHandler = Handler (
     //handlerFunc: (BuildContext context, Map<String, dynamic> params) => LoginView()
+  );
+
+  static Handler _featuresHandler = Handler(
+    handlerFunc: (BuildContext context, Map<String, dynamic> params) => FeaturesPage()
   );
 
 
