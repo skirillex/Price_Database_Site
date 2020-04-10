@@ -47,9 +47,6 @@ class PriceHistoryChart extends StatelessWidget {
       new charts.ChartTitle(" ",subTitle: "Lowest: \$${lowprice.toStringAsFixed(2)} (${new DateFormat.MMMd().format(lowpricedate)})                Highest: \$${highprice.toStringAsFixed(2)} (${new DateFormat.MMMd().format(highpricedate)})", subTitleStyleSpec: charts.TextStyleSpec(color: charts.MaterialPalette.gray.shadeDefault), behaviorPosition: charts.BehaviorPosition.bottom, titleOutsideJustification: charts.OutsideJustification.start),
     ]);
   }
-  // TODO possibly add a selection Callback to chart to make selecting points dynamic https://google.github.io/charts/flutter/example/behaviors/selection_callback_example
-
-  // TODO need to add functionality for showing all date ranges
 
   List<charts.Series<TimeSeriesPriceHistory, DateTime>> _loadPriceData() {
 
