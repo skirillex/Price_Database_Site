@@ -64,6 +64,9 @@ class _TopPriceDropsBoxState extends State<TopPriceDropsBox> with SingleTickerPr
               ),
 
           ),
+          Divider(
+            color: Colors.white,
+          ),
 
           Center(
             child: Row(
