@@ -131,7 +131,21 @@ class _ChartCardState extends State<ChartCard> with SingleTickerProviderStateMix
                       return CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.deepOrange),);
                     },
                   ),
-                  Text("Test tab 4")
+                  FutureBuilder<ItemPriceData>(
+                    future: widget.futureItemPrice,
+                    builder: (context, snapshot){
+                      if (snapshot.hasData){
+                        var date = DateTime.parse(snapshot.data.item_price[snapshot.data.item_price.length - 1][1]);
+                        var todaydate = DateTime.now();
+                        var daysback = todaydate.difference(date).inDays;
+
+                        return PriceHistoryChart(snapshot.data.item_price,daysback+1, true);
+                      } else if (snapshot.hasError){
+                        return Text("${snapshot.error}");
+                      }
+                      return CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.deepOrange),);
+                    },
+                  ),
                 ],
                 controller: _tabController,
               ),
