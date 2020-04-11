@@ -1,3 +1,5 @@
+import 'package:colliecolliecollie/Widgets/CollieBar.dart';
+import 'package:colliecolliecollie/Widgets/Linkbar.dart';
 import 'package:colliecolliecollie/Widgets/NotificationFormAnimatedContainer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -40,16 +42,15 @@ List<FeaturesItems> _data = generateItems();
 
     return Scaffold(
       appBar: AppBar(
-          // because materialApp is used appBar is created here.
           title: //Text("SuperDry Price Database"),
-              FlatButton(
+          FlatButton(
             hoverColor: Colors.deepOrangeAccent,
             onPressed: () {
               Navigator.pushNamed(context, "/home");
             },
             child: Text(
-              "SuperDry Price Database",
-              style: TextStyle(color: Colors.white, fontSize: 19),
+              "CollieCollieCollie",
+              style: Theme.of(context).textTheme.display1.merge(TextStyle(fontSize: 19, color: Colors.white)),
             ),
           ),
           // title
@@ -57,23 +58,31 @@ List<FeaturesItems> _data = generateItems();
             Row(mainAxisAlignment: MainAxisAlignment.start,
                 // does nothing so far
                 children: [
+                  Align(
+                    alignment: Alignment.center,
+                    child:
+                    Container(
+                      //alignment: Alignment(0.0, 0.0),
+                      width: 500,
+                      // stretches out to the left middle of screen so far
+                      child: TextField(
+                          cursorColor: Colors.white,
+                          maxLines: 1,
+                          obscureText: false,
+                          onTap: () {},
+                          onSubmitted: (String urlString) {
+                            Navigator.pushNamed(context,
+                                urlString.substring(urlString.indexOf("us")));
+                          },
+                          // get the value
+                          decoration: InputDecoration(
+                              labelStyle: Theme.of(context).textTheme.display1.merge(TextStyle(fontSize: 19, color: Colors.white)),
+                              labelText: 'Enter SuperDry URL to find product',
+                              suffixIcon: Icon(Icons.search, color: Colors.white,))),
+                    ),
+                  ),
                   Container(
-                    alignment: Alignment(0.0, 0.0),
-                    width: 500,
-                    // stretches out to the left middle of screen so far
-                    child: TextField(
-                        maxLines: 1,
-                        obscureText: false,
-                        onTap: () {},
-                        onSubmitted: (String urlString) {
-                          Navigator.pushNamed(context,
-                              urlString.substring(urlString.indexOf("us")));
-                          //print(urlString.substring(urlString.indexOf("us")));
-                        },
-                        // get the value
-                        decoration: InputDecoration(
-                            labelText: 'Enter SuperDry URL to find product',
-                            suffixIcon: Icon(Icons.search))),
+                    width: 100,
                   ),
                   Container(
                     // container to hold the signup and login buttons
@@ -83,33 +92,27 @@ List<FeaturesItems> _data = generateItems();
                       buttonMinWidth: 300,
                       children: <Widget>[
                         FlatButton(
-                          child: Text(
-                            buttonText,
-                            style: Theme.of(context)
-                                .textTheme
-                                .display1
-                                .merge(TextStyle(
-                                  color: Colors.white,
-                                )),
-                            textScaleFactor: .6,
-                          ),
-                          hoverColor: Colors.deepOrangeAccent,
-                          onPressed: () {
-                            print("pressed Get Notified");
+                            child: Text(
+                              "Get Notified",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .display1
+                                  .merge(TextStyle(
+                                color: Colors.white,
+                              )),
+                              textScaleFactor: .6,
+                            ),
+                            hoverColor: Colors.deepOrangeAccent,
+                            onPressed: () {
+                              print("pressed Get Notified");
 
-                            _notificationFormAnimatedContainerState.currentState
-                                .opencloseform();
-                            setState(() {
-                              if (openFlag == false) {
-                                buttonText = buttonTextClosed;
-                                openFlag = !openFlag;
-                              } else {
-                                buttonText = buttonTextOpen;
-                                openFlag = !openFlag;
-                              }
-                            });
-                          },
-                        ),
+                              _notificationFormAnimatedContainerState
+                                  .currentState
+                                  .opencloseform();
+                              setState(
+                                    () {},
+                              );
+                            })
                       ],
                     ),
                   ),
@@ -123,66 +126,7 @@ List<FeaturesItems> _data = generateItems();
           ListView(
             //padding: const EdgeInsets.only(left: 30, right: 30),
             children: <Widget>[
-              Container(
-                decoration: const BoxDecoration(
-                    border: Border(
-                        bottom: BorderSide(
-                            width: 1.0,
-                            color: Colors
-                                .black38) // need to change this to fit theme
-                        )),
-                height: 50,
-                alignment: Alignment(-0.95, -0.8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Spacer(
-                        //flex: 5,
-                        //flex: 2,
-                        // width: 80,
-                        ),
-                    FlatButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, "/home");
-                      },
-                      color: Colors.black,
-                      hoverColor: Colors.deepOrangeAccent,
-                      child: Text(
-                        "Top Price Drops",
-                        style: TextStyle(fontSize: 20, color: Colors.white),
-                      ),
-                    ),
-                    Spacer(),
-                    FlatButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, "/features");
-                      },
-                      color: Colors.black,
-                      hoverColor: Colors.deepOrangeAccent,
-                      child: Text(
-                        "Features",
-                        style: TextStyle(fontSize: 20, color: Colors.white),
-                      ),
-                    ),
-                    Spacer(),
-                    FlatButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, "/home");
-                      },
-                      color: Colors.black,
-                      hoverColor: Colors.deepOrangeAccent,
-                      child: Text(
-                        "About",
-                        style: TextStyle(fontSize: 20, color: Colors.white),
-                      ),
-                    ),
-                    Spacer(
-                      flex: 100,
-                    ),
-                    Spacer(),
-                  ],
-                ),
-              ),
+              Linkbar(),
               Divider(
                 height: 20,
                 color: Colors.white,

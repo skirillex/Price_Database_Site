@@ -1,10 +1,7 @@
-import 'dart:convert';
 
-import 'package:flutter/gestures.dart';
+import 'package:colliecolliecollie/Widgets/CollieBar.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
-import '../main.dart';
 import 'ItemPage.dart';
 import 'package:colliecolliecollie/Widgets/NotificationFormAnimatedContainer.dart';
 
@@ -23,21 +20,20 @@ class LayoutTemplateState extends State<LayoutTemplate> {
       GlobalKey<NotificationFormAnimatedContainerState>();
 
   String urlToRoute(String url) {}
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            // becase materialApp is used appBar is created here.
             title: //Text("SuperDry Price Database"),
-                FlatButton(
+            FlatButton(
               hoverColor: Colors.deepOrangeAccent,
               onPressed: () {
                 Navigator.pushNamed(context, "/home");
               },
               child: Text(
-                "SuperDry Price Database",
-                style: TextStyle(color: Colors.white, fontSize: 19),
+                "CollieCollieCollie",
+                style: Theme.of(context).textTheme.display1.merge(TextStyle(fontSize: 19, color: Colors.white)),
               ),
             ),
             // title
@@ -45,23 +41,31 @@ class LayoutTemplateState extends State<LayoutTemplate> {
               Row(mainAxisAlignment: MainAxisAlignment.start,
                   // does nothing so far
                   children: [
+                    Align(
+                      alignment: Alignment.center,
+                      child:
+                      Container(
+                        //alignment: Alignment(0.0, 0.0),
+                        width: 500,
+                        // stretches out to the left middle of screen so far
+                        child: TextField(
+                            cursorColor: Colors.white,
+                            maxLines: 1,
+                            obscureText: false,
+                            onTap: () {},
+                            onSubmitted: (String urlString) {
+                              Navigator.pushNamed(context,
+                                  urlString.substring(urlString.indexOf("us")));
+                            },
+                            // get the value
+                            decoration: InputDecoration(
+                                labelStyle: Theme.of(context).textTheme.display1.merge(TextStyle(fontSize: 19, color: Colors.white)),
+                                labelText: 'Enter SuperDry URL to find product',
+                                suffixIcon: Icon(Icons.search, color: Colors.white,))),
+                      ),
+                    ),
                     Container(
-                      alignment: Alignment(0.0, 0.0),
-                      width: 500,
-                      // stretches out to the left middle of screen so far
-                      child: TextField(
-                          maxLines: 1,
-                          obscureText: false,
-                          onTap: () {},
-                          onSubmitted: (String urlString) {
-                            Navigator.pushNamed(context,
-                                urlString.substring(urlString.indexOf("us")));
-                            //print(urlString.substring(urlString.indexOf("us")));
-                          },
-                          // get the value
-                          decoration: InputDecoration(
-                              labelText: 'Enter SuperDry URL to find product',
-                              suffixIcon: Icon(Icons.search))),
+                      width: 100,
                     ),
                     Container(
                       // container to hold the signup and login buttons
@@ -77,8 +81,8 @@ class LayoutTemplateState extends State<LayoutTemplate> {
                                     .textTheme
                                     .display1
                                     .merge(TextStyle(
-                                      color: Colors.white,
-                                    )),
+                                  color: Colors.white,
+                                )),
                                 textScaleFactor: .6,
                               ),
                               hoverColor: Colors.deepOrangeAccent,
@@ -89,7 +93,7 @@ class LayoutTemplateState extends State<LayoutTemplate> {
                                     .currentState
                                     .opencloseform();
                                 setState(
-                                  () {},
+                                      () {},
                                 );
                               })
                         ],

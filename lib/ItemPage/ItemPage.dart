@@ -2,13 +2,13 @@ import 'dart:convert';
 
 import 'package:colliecolliecollie/Api/ItemData.dart';
 import 'package:colliecolliecollie/Api/ItemPriceData.dart';
+import 'package:colliecolliecollie/Widgets/Linkbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
 
-import '../main.dart';
 import 'ChartCard.dart';
 import 'DescriptionColumn.dart';
 import 'PriceColumn.dart';
@@ -65,76 +65,11 @@ class _ItemPageState extends State<ItemPage> {
     return ListView(
         //SingleChildScrollView(
 
-        padding: const EdgeInsets.all(8),
+       // padding: const EdgeInsets.all(8),
         //physics: const ScrollPhysics(),
         dragStartBehavior: DragStartBehavior.down,
         children: <Widget>[
-          Column(
-            // this column and container builds and holds the links bar underneath the appbar
-            children: <Widget>[
-              Container(
-                  decoration: const BoxDecoration(
-                      border: Border(
-                          bottom: BorderSide(
-                              width: 1.0,
-                              color: Colors
-                                  .black38) // need to change this to fit theme
-                          )),
-                  height: 47,
-                  alignment: Alignment.center, //Alignment(-0.95, -0.8),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Spacer(
-                          // flex: 5,
-                          // width: 80,
-                          ),
-                      FlatButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, "/home");
-                        },
-                        color: Colors.black,
-                        hoverColor: Colors.deepOrangeAccent,
-                        child: Text(
-                          "Top Price Drops",
-                          style: TextStyle(fontSize: 20, color: Colors.white),
-                        ),
-                      ),
-                      Spacer(),
-                      FlatButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, "/features");
-                        },
-                        color: Colors.black,
-                        hoverColor: Colors.deepOrangeAccent,
-                        child: Text(
-                          "Features",
-                          style: TextStyle(fontSize: 20, color: Colors.white),
-                        ),
-                      ),
-                      Spacer(),
-                      FlatButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, "/home");
-                        },
-                        color: Colors.black,
-                        hoverColor: Colors.deepOrangeAccent,
-                        child: Text(
-                          "About",
-                          style: TextStyle(fontSize: 20, color: Colors.white),
-                        ),
-                      ),
-                      Spacer(
-                        flex: 50,
-                      ),
-                      Spacer(),
-                    ],
-                  )),
-              Container(
-                height: 10,
-              )
-            ],
-          ),
+          Linkbar(),
           Container(
             // this container creates some padding between link bar above and content below
             height: 30,
