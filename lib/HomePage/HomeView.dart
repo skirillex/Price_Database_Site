@@ -27,6 +27,7 @@ class HomeViewState extends State<HomeView> {
 
     return Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
             title: //Text("SuperDry Price Database"),
             FlatButton(
               hoverColor: Colors.deepOrangeAccent,

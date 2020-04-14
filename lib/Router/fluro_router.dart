@@ -14,10 +14,10 @@ class FluroRouter {
 
   static void setupRouter(){
     router.define("item/:itemId", handler: _itemHandler);
-    router.define("/home", handler: _homeHandler);
-    router.define("/login", handler: _loginHandler);
-    router.define("us/:gender/:itemcategory/:details/:id/:itemdesc", handler: _itemUrlHandler);
-    router.define("/features", handler: _featuresHandler);
+    router.define("/home", handler: _homeHandler, transitionType: TransitionType.fadeIn);
+    router.define("/login", handler: _loginHandler, );
+    router.define("us/:gender/:itemcategory/:details/:id/:itemdesc", handler: _itemUrlHandler, transitionType: TransitionType.fadeIn);
+    router.define("/features", handler: _featuresHandler, transitionType: TransitionType.fadeIn);
 
   }
 

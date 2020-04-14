@@ -20,11 +20,12 @@ class LayoutTemplateState extends State<LayoutTemplate> {
       GlobalKey<NotificationFormAnimatedContainerState>();
 
   String urlToRoute(String url) {}
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+            automaticallyImplyLeading: false,
             title: //Text("SuperDry Price Database"),
             FlatButton(
               hoverColor: Colors.deepOrangeAccent,

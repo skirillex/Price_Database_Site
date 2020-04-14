@@ -42,6 +42,7 @@ List<FeaturesItems> _data = generateItems();
 
     return Scaffold(
       appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: //Text("SuperDry Price Database"),
           FlatButton(
             hoverColor: Colors.deepOrangeAccent,
@@ -179,7 +180,12 @@ List<FeaturesItems> _data = generateItems();
                 ),
               )
             ],
-          )
+          ),
+          Align(
+            alignment: Alignment.topRight,
+            child: NotificationFormAnimatedContainer(
+                key: _notificationFormAnimatedContainerState),
+          ),
         ],
       ),
     );

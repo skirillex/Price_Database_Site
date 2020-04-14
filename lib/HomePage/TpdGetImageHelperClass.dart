@@ -19,7 +19,8 @@ class TpdGetImageHelperClass extends StatelessWidget {
   }
 
   Future<ItemData> fetchItem() async {
-    final response = await http.get("http://127.0.0.1:5000/api/v1/resources/items/?id=$itemId");
+    // final response = await http.get("http://127.0.0.1:5000/api/v1/resources/items/?id=$itemId");
+    final response = await http.get("http://209.122.124.193:5000/api/v1/resources/items/?id=$itemId");
 
     if (response.statusCode == 200) {
       //print(json.decode(response.body));

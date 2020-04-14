@@ -35,7 +35,7 @@ class PriceColumn extends StatelessWidget{ //stateless because it needs to be dr
               } else if (snapshot.hasError){
                 return Text("${snapshot.error}");
               }
-              return CircularProgressIndicator();
+              return CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.deepOrange),);
             },
           ),
 
@@ -69,7 +69,7 @@ class PriceColumn extends StatelessWidget{ //stateless because it needs to be dr
                   } else if (snapshot.hasError){
                     return Text("${snapshot.error}");
                   }
-                  return CircularProgressIndicator();
+                  return CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.deepOrange),);
                 },
               )
           ),

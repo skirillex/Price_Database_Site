@@ -30,7 +30,7 @@ class DescriptionColumn extends StatelessWidget{
                 } else if (snapshot.hasError){
                   return Text("${snapshot.error}");
                 }
-                return CircularProgressIndicator();
+                return CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.deepOrange),);
               },
             ),
 
