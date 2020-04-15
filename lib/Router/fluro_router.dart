@@ -1,10 +1,15 @@
 
 import 'package:colliecolliecollie/FeaturesPage/FeaturesPage.dart';
+import 'package:colliecolliecollie/FeaturesPage/Mobile/FeaturesPageMobile.dart';
 import 'package:colliecolliecollie/HomePage/HomeView.dart';
+import 'package:colliecolliecollie/HomePage/Mobile/HomeViewMobile.dart';
 import 'package:colliecolliecollie/ItemPage/ItemPage.dart';
 import 'package:colliecolliecollie/ItemPage/LayoutTemplate.dart';
+import 'package:colliecolliecollie/ItemPage/Mobile/LayoutTemplateMobile.dart';
+import 'package:colliecolliecollie/Widgets/ResponsiveWidget.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:colliecolliecollie/ItemPage/Mobile/ItemPageMobile.dart';
 
 
 class FluroRouter {
@@ -22,15 +27,26 @@ class FluroRouter {
   }
 
   static Handler _itemHandler = Handler(
-    handlerFunc: (BuildContext context, Map<String, dynamic> params) => ItemPage(params['itemId'][0])
+    handlerFunc: (BuildContext context, Map<String, dynamic> params) => ResponsiveWidget(
+      largeScreen: ItemPage(params['itemId'][0]),
+      smallScreen: ItemPageMobile(params['itemId'][0]),
+      mediumScreen: ItemPageMobile(params['itemId'][0])
+    )
   );
 
   static Handler _itemUrlHandler = Handler (
-    handlerFunc: (BuildContext context, Map<String, dynamic> params) => LayoutTemplate(params['id'][0])
+    handlerFunc: (BuildContext context, Map<String, dynamic> params) => ResponsiveWidget(
+      largeScreen: LayoutTemplate(params['id'][0]),
+      smallScreen: LayoutTemplateMobile(params['id'][0]),
+      mediumScreen: LayoutTemplate(params['id'][0])
+    )
   );
 
   static Handler _homeHandler = Handler(
-    handlerFunc: (BuildContext context, Map<String, dynamic> params) => HomeView()
+    handlerFunc: (BuildContext context, Map<String, dynamic> params) => ResponsiveWidget(
+      largeScreen: HomeView(),
+      smallScreen:  HomeViewMobile(),
+      mediumScreen: HomeViewMobile())
   );
 
   static Handler _loginHandler = Handler (
@@ -38,25 +54,13 @@ class FluroRouter {
   );
 
   static Handler _featuresHandler = Handler(
-    handlerFunc: (BuildContext context, Map<String, dynamic> params) => FeaturesPage()
+    handlerFunc: (BuildContext context, Map<String, dynamic> params) => ResponsiveWidget(
+    largeScreen: FeaturesPage(),
+      smallScreen: FeaturesPageMobile(),
+      mediumScreen: FeaturesPageMobile(),
+    )
   );
 
-
-/*
-  static String getIdFromUrl(String urlPath)
-  {
-    var urlArray = urlPath.split("/");
-
-    for (int i = 0; i < urlArray.length; i++)
-      {
-        if (urlArray[i] == "details")
-          {
-            return urlArray[i+1];
-          }
-      }
-  }
-
- */
 
 }
 

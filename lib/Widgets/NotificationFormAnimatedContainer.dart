@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 
 
 class NotificationFormAnimatedContainer extends StatefulWidget{
-  NotificationFormAnimatedContainer({Key  key}) : super(key:key);
+  double padding;
+  NotificationFormAnimatedContainer(double this.padding, {Key  key}) : super(key:key);
+
 
   @override
   State<StatefulWidget> createState() => NotificationFormAnimatedContainerState();
@@ -35,7 +37,7 @@ class NotificationFormAnimatedContainerState extends State<NotificationFormAnima
       duration: Duration(milliseconds: 300),
       curve: Curves.easeInOut,
       child: Padding(
-        padding: EdgeInsets.fromLTRB(0,0, 30,0),
+        padding: EdgeInsets.fromLTRB(0,0, widget.padding,0),
         child:
         Card(
           elevation: 8,

@@ -36,6 +36,7 @@ class PriceHistoryChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double phonesize = MediaQuery.of(context).size.width;
     return new charts.TimeSeriesChart(seriesList, animate: animate, behaviors: [
       new charts.RangeAnnotation([
         new charts.RangeAnnotationSegment(
@@ -44,7 +45,7 @@ class PriceHistoryChart extends StatelessWidget {
         new charts.LineAnnotationSegment(findLowHighPrice(daysback), charts.RangeAnnotationAxisType.measure, startLabel: "\$${lowprice.toStringAsFixed(2)}", labelStyleSpec: charts.TextStyleSpec(color: charts.MaterialPalette.green.shadeDefault) ,color: charts.MaterialPalette.green.shadeDefault, dashPattern: [4, 4]),
         new charts.LineAnnotationSegment(highprice, charts.RangeAnnotationAxisType.measure, endLabel: "\$${highprice.toStringAsFixed(2)}", labelStyleSpec: charts.TextStyleSpec(color:  charts.MaterialPalette.red.shadeDefault) ,color: charts.MaterialPalette.red.shadeDefault, dashPattern: [4, 4]),
       ]),
-      new charts.ChartTitle(" ",subTitle: "Lowest: \$${lowprice.toStringAsFixed(2)} (${new DateFormat.MMMd().format(lowpricedate)})                Highest: \$${highprice.toStringAsFixed(2)} (${new DateFormat.MMMd().format(highpricedate)})", subTitleStyleSpec: charts.TextStyleSpec(color: charts.MaterialPalette.gray.shadeDefault), behaviorPosition: charts.BehaviorPosition.bottom, titleOutsideJustification: charts.OutsideJustification.start),
+      new charts.ChartTitle(" ",subTitle: "Lowest: \$${lowprice.toStringAsFixed(2)} (${new DateFormat.MMMd().format(lowpricedate)})                Highest: \$${highprice.toStringAsFixed(2)} (${new DateFormat.MMMd().format(highpricedate)})", subTitleStyleSpec: charts.TextStyleSpec(color: charts.MaterialPalette.gray.shadeDefault, fontSize: (phonesize < 376) ? 10 :(phonesize < 501)? 13 : 15), behaviorPosition: charts.BehaviorPosition.bottom, titleOutsideJustification: charts.OutsideJustification.start),
     ]);
   }
 

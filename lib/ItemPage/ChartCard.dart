@@ -25,6 +25,8 @@ class _ChartCardState extends State<ChartCard> with SingleTickerProviderStateMix
   }
   @override
   Widget build(BuildContext context){
+    double phonesize = MediaQuery.of(context).size.width;
+
     return SizedBox(
       height: 700,
       width: 800,
@@ -66,20 +68,20 @@ class _ChartCardState extends State<ChartCard> with SingleTickerProviderStateMix
                       alignment: Alignment.center,
                       child: Text("1 Month",
                         style: TextStyle(fontWeight: FontWeight.bold,
-                            letterSpacing: 1),),
+                            letterSpacing: 1, fontSize: phonesize < 376 ? 10 : 13),),
                     ),
                   ),
                   Tab( icon: Icon(Icons.calendar_today),
                     child: Align(
                       alignment: Alignment.center,
                       child: Text("3 Months",
-                        style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1),),
+                        style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1, fontSize: phonesize < 376 ? 10 : 13),),
                     ),),
                   Tab(icon: Icon(Icons.calendar_today),
                     child: Align(
                       alignment: Alignment.center,
                       child: Text("6 Months",
-                          style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1)),
+                          style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1, fontSize: phonesize < 376 ? 10 : 13)),
                     ),),
                   //Tab(text: "All", icon: Icon(Icons.access_time),)
                   Tab(
@@ -87,7 +89,7 @@ class _ChartCardState extends State<ChartCard> with SingleTickerProviderStateMix
                     child: Align(
                       alignment: Alignment.center,
                       child: Text("ALL",
-                          style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1)),
+                          style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1, fontSize: phonesize < 376 ? 10 : 13)),
                     ),
                   )
                 ],

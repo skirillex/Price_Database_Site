@@ -1,6 +1,8 @@
+import 'package:colliecolliecollie/Widgets/ResponsiveWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'HomePage/HomeView.dart';
+import 'HomePage/Mobile/HomeViewMobile.dart';
 import 'Router/fluro_router.dart';
 import 'Router/undefined_view.dart';
 
@@ -36,7 +38,10 @@ class MyApp extends StatelessWidget {
            )
       ),
 
-      home: HomeView()//LayoutTemplate()
+      home: ResponsiveWidget(
+        largeScreen: HomeView(),
+        smallScreen:  HomeViewMobile(),
+      )//LayoutTemplate()
 
     );
   }

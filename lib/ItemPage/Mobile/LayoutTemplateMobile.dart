@@ -2,19 +2,19 @@
 import 'package:colliecolliecollie/Widgets/CollieBar.dart';
 import 'package:flutter/material.dart';
 
-import 'ItemPage.dart';
+import 'ItemPageMobile.dart';
 import 'package:colliecolliecollie/Widgets/NotificationFormAnimatedContainer.dart';
 
-class LayoutTemplate extends StatefulWidget {
+class LayoutTemplateMobile extends StatefulWidget {
   final String item;
 
-  const LayoutTemplate(this.item, {Key key}) : super(key: key);
+  const LayoutTemplateMobile(this.item, {Key key}) : super(key: key);
 
   @override
-  LayoutTemplateState createState() => LayoutTemplateState();
+  LayoutTemplateMobileState createState() => LayoutTemplateMobileState();
 }
 
-class LayoutTemplateState extends State<LayoutTemplate> {
+class LayoutTemplateMobileState extends State<LayoutTemplateMobile> {
   final GlobalKey<NotificationFormAnimatedContainerState>
       _notificationFormAnimatedContainerState =
       GlobalKey<NotificationFormAnimatedContainerState>();
@@ -23,58 +23,61 @@ class LayoutTemplateState extends State<LayoutTemplate> {
 
   @override
   Widget build(BuildContext context) {
+    double phonesize = MediaQuery.of(context).size.width;
+
     return Scaffold(
         appBar: AppBar(
             automaticallyImplyLeading: false,
-            title: //Text("SuperDry Price Database"),
-            FlatButton(
-              hoverColor: Colors.deepOrangeAccent,
-              onPressed: () {
-                Navigator.pushNamed(context, "/home");
-              },
-              child: Text(
-                "CollieCollieCollie",
-                style: Theme.of(context).textTheme.display1.merge(TextStyle(fontSize: 19, color: Colors.white)),
-              ),
-            ),
+            titleSpacing: 0.0,
+
             // title
             actions: <Widget>[
               Row(mainAxisAlignment: MainAxisAlignment.start,
-                  // does nothing so far
                   children: [
                     Align(
                       alignment: Alignment.center,
                       child:
                       Container(
                         //alignment: Alignment(0.0, 0.0),
-                        width: 500,
-                        // stretches out to the left middle of screen so far
-                        child: TextField(
-                            cursorColor: Colors.white,
-                            style: TextStyle(fontSize: 10, color: Colors.white),
-                            maxLines: 1,
-                            obscureText: false,
-                            onTap: () {},
-                            onSubmitted: (String urlString) {
-                              Navigator.pushNamed(context,
-                                  urlString.substring(urlString.indexOf("us")));
-                            },
-                            // get the value
-                            decoration: InputDecoration(
-                                labelStyle: Theme.of(context).textTheme.display1.merge(TextStyle(fontSize: 19, color: Colors.white)),
-                                labelText: 'Enter SuperDry URL to find product',
-                                suffixIcon: Icon(Icons.search, color: Colors.white,))),
+                          width: phonesize < 376 ? 280 : 300,//280,
+                          // stretches out to the left middle of screen so far
+                          child: Padding(
+                            padding: EdgeInsets.all(phonesize < 376 ? 2 : 2),
+                            child: TextField(
+                              style: TextStyle(fontSize: 10, color: Colors.white),
+                                cursorColor: Colors.white,
+                                //maxLines: 1,
+                                obscureText: false,
+                                onTap: () {},
+                                onSubmitted: (String urlString) {
+                                  print(phonesize);
+                                  Navigator.pushNamed(context,
+                                      urlString.substring(urlString.indexOf("us")));
+                                },
+                                // get the value
+                                decoration: InputDecoration(
+
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.white)
+                                  ),
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.deepOrange
+                                    ),
+                                  ),
+                                    labelStyle: Theme.of(context).textTheme.display1.merge(TextStyle(fontSize: 14, color: Colors.white)),
+                                    labelText: 'Enter SuperDry URL to find product',
+                                    suffixIcon: Icon(Icons.search, color: Colors.white,))),
+                          )
                       ),
                     ),
-                    Container(
-                      width: 100,
-                    ),
+
                     Container(
                       // container to hold the signup and login buttons
-                      width: 200,
+                      width: phonesize < 376 ? 105 : 120,//105,
                       //margin: EdgeInsets.all(10),
                       child: ButtonBar(
-                        buttonMinWidth: 300,
+                        buttonMinWidth: 120,
                         children: <Widget>[
                           FlatButton(
                               child: Text(
@@ -85,7 +88,7 @@ class LayoutTemplateState extends State<LayoutTemplate> {
                                     .merge(TextStyle(
                                   color: Colors.white,
                                 )),
-                                textScaleFactor: .6,
+                                textScaleFactor: phonesize < 376 ? .40 : .45,//.40,
                               ),
                               hoverColor: Colors.deepOrangeAccent,
                               onPressed: () {
@@ -102,16 +105,16 @@ class LayoutTemplateState extends State<LayoutTemplate> {
                       ),
                     ),
                     Container(
-                      width: 50,
+                      width: 0,
                     ),
                   ])
             ]),
         body: Stack(
           children: <Widget>[
-            ItemPage(widget.item),
+            ItemPageMobile(widget.item),
             Align(
               alignment: Alignment.topRight,
-              child: NotificationFormAnimatedContainer(30,
+              child: NotificationFormAnimatedContainer(0,
                 key: _notificationFormAnimatedContainerState,
               ),
             )
