@@ -52,6 +52,7 @@ class HomeViewState extends State<HomeView> {
                         width: 500,
                         // stretches out to the left middle of screen so far
                         child: TextField(
+                            style: TextStyle(fontSize: 10, color: Colors.white),
                             cursorColor: Colors.white,
                             maxLines: 1,
                             obscureText: false,
@@ -119,7 +120,7 @@ class HomeViewState extends State<HomeView> {
           ),
           Align(
             alignment: Alignment.topRight,
-            child: NotificationFormAnimatedContainer(
+            child: NotificationFormAnimatedContainer(30,
                 key: _notificationFormAnimatedContainerState),
           ),
         ]));

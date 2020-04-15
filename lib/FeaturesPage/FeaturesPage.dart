@@ -68,6 +68,7 @@ List<FeaturesItems> _data = generateItems();
                       // stretches out to the left middle of screen so far
                       child: TextField(
                           cursorColor: Colors.white,
+                          style: TextStyle(fontSize: 10, color: Colors.white),
                           maxLines: 1,
                           obscureText: false,
                           onTap: () {},
@@ -183,7 +184,7 @@ List<FeaturesItems> _data = generateItems();
           ),
           Align(
             alignment: Alignment.topRight,
-            child: NotificationFormAnimatedContainer(
+            child: NotificationFormAnimatedContainer(30,
                 key: _notificationFormAnimatedContainerState),
           ),
         ],
