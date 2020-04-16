@@ -90,6 +90,7 @@ class PriceWatchMobileState extends State<PriceWatchMobile> {
 
   @override
   Widget build(BuildContext context) {
+    double phonesize = MediaQuery.of(context).size.width;
     return Center(
       child: Container(
           width: 800,
@@ -139,7 +140,7 @@ class PriceWatchMobileState extends State<PriceWatchMobile> {
                               children: <Widget>[
                                 Container(
                                   height: 80,
-                                  width: 300,
+                                  width: phonesize < 376 ? 275 : 300,
                                   child: Padding(
                                     padding: EdgeInsets.only(left: 8, top: 8, right: 8),
                                     child: TextFormField(
@@ -155,7 +156,7 @@ class PriceWatchMobileState extends State<PriceWatchMobile> {
                                 ),
                                 Container(
                                   height: 80,
-                                  width: 300,
+                                  width: phonesize < 376 ? 275 : 300,
                                   child: Padding(
                                     padding: EdgeInsets.only(
                                       left: 8,

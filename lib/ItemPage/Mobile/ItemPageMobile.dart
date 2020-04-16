@@ -123,7 +123,7 @@ class _ItemPageMobileState extends State<ItemPageMobile> {
 
                             children: <Widget>[
                               Column(
-                                //crossAxisAlignment: CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 //mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
                                   Padding(
@@ -132,7 +132,7 @@ class _ItemPageMobileState extends State<ItemPageMobile> {
                                       alignment: Alignment.centerLeft,
                                       child: Container(
                                         height: 15,
-                                        width: 120,
+                                        width: 80, //120
                                         //alignment: Alignment(-1, 0),
                                         child: FutureBuilder<ItemData>(
                                           future: futureItem,
@@ -163,7 +163,7 @@ class _ItemPageMobileState extends State<ItemPageMobile> {
                                       child: Row(
                                         children: <Widget>[
                                           Container(
-                                            width: phonesize < 376 ? 110 : 118,
+                                            width: phonesize < 376 ? 75 : 118, //118
                                             child: FutureBuilder<ItemData>(
                                                 future: futureItem,
                                                 builder: (context, snapshot) {
@@ -195,8 +195,8 @@ class _ItemPageMobileState extends State<ItemPageMobile> {
                                                                           color: Colors
                                                                               .white,
                                                                           fontSize: phonesize < 376
-                                                                              ? 9
-                                                                              : 11),
+                                                                              ? 10
+                                                                              : 11),//11
                                                                     ),
                                                           ));
                                                 }),
@@ -208,13 +208,15 @@ class _ItemPageMobileState extends State<ItemPageMobile> {
                                 ],
                               ),
                               Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Align(
+                                    alignment: Alignment.centerLeft,
                                     child: Column(
                                       children: <Widget>[
 
                                         Container(
-                                          height: 120,
+                                          height: 110, //120
                                         ),
                                         PriceColumnMobile(
                                             "2020-03-09", futureItemPrice),
