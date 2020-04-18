@@ -25,13 +25,13 @@ class DescriptionColumnMobile extends StatelessWidget{
         child: Column(
           children: <Widget>[
             SizedBox(
-              width: phonesize < 376 ? 189 : 200,
+              width: phonesize < 376 ? 160 : 200,
               child: FutureBuilder<ItemData>(
                 future: futureItem,
                 builder: (context, snapshot){
                   if (snapshot.hasData){
                     return SelectableText(snapshot.data.name,
-                      style: Theme.of(context).textTheme.display1.merge(TextStyle(fontSize: phonesize < 376 ? 17 : 19)),);
+                      style: Theme.of(context).textTheme.display1.merge(TextStyle(fontSize: phonesize < 376 ? 16 : 19)),);
                   } else if (snapshot.hasError){
                     return Text("${snapshot.error}");
                   }

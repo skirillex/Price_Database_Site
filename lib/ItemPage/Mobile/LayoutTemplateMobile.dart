@@ -19,6 +19,7 @@ class LayoutTemplateMobileState extends State<LayoutTemplateMobile> {
       _notificationFormAnimatedContainerState =
       GlobalKey<NotificationFormAnimatedContainerState>();
 
+
   String urlToRoute(String url) {}
 
   @override
@@ -30,7 +31,16 @@ class LayoutTemplateMobileState extends State<LayoutTemplateMobile> {
             automaticallyImplyLeading: false,
             titleSpacing: 0.0,
 
-            // title
+            title: FlatButton(
+              hoverColor: Colors.deepOrangeAccent,
+              onPressed: () {
+                Navigator.pushNamed(context, "/home");
+              },
+              child: Text(
+                "CollieCollieCollie",
+                style: Theme.of(context).textTheme.display1.merge(TextStyle(fontSize: 16, color: Colors.white)),
+              ),
+            ),
             actions: <Widget>[
               Row(mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -39,10 +49,10 @@ class LayoutTemplateMobileState extends State<LayoutTemplateMobile> {
                       child:
                       Container(
                         //alignment: Alignment(0.0, 0.0),
-                          width: phonesize < 376 ? 280 : 300,//280,
+                          width: phonesize < 376 ? 275 : 290,//280,
                           // stretches out to the left middle of screen so far
                           child: Padding(
-                            padding: EdgeInsets.all(phonesize < 376 ? 2 : 2),
+                            padding: EdgeInsets.fromLTRB(phonesize < 376 ? 5 : 10, 2, 0, 2),
                             child: TextField(
                               style: TextStyle(fontSize: 10, color: Colors.white),
                                 cursorColor: Colors.white,
@@ -50,7 +60,7 @@ class LayoutTemplateMobileState extends State<LayoutTemplateMobile> {
                                 obscureText: false,
                                 onTap: () {},
                                 onSubmitted: (String urlString) {
-                                  print(phonesize);
+                                  print(widget.item);
                                   Navigator.pushNamed(context,
                                       urlString.substring(urlString.indexOf("us")));
                                 },
@@ -109,16 +119,26 @@ class LayoutTemplateMobileState extends State<LayoutTemplateMobile> {
                     ),
                   ])
             ]),
-        body: Stack(
-          children: <Widget>[
-            ItemPageMobile(widget.item),
-            Align(
-              alignment: Alignment.topRight,
-              child: NotificationFormAnimatedContainer(0,
-                key: _notificationFormAnimatedContainerState,
-              ),
-            )
-          ],
+        body: GestureDetector(
+          onTapDown: (tapdown) {FocusScope.of(context).unfocus();},
+          child: RefreshIndicator(
+            onRefresh: () {return Navigator.pushNamed(context, "us/searching/the/price/${widget.item}/db");},
+            color: Colors.deepOrange,
+            child: Stack(
+              children: <Widget>[
+                GestureDetector(
+                  onTapUp: (tapup) {_notificationFormAnimatedContainerState.currentState.closeform();},
+                  child: ItemPageMobile(widget.item),
+                ),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: NotificationFormAnimatedContainer(0,
+                    key: _notificationFormAnimatedContainerState,
+                  ),
+                )
+              ],
+            ),
+          ),
         ) //child
         );
   }

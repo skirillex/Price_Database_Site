@@ -108,6 +108,7 @@ class GetNotifiedFormState extends State<GetNotifiedForm>
 
   @override
   Widget build(BuildContext context) {
+    double phonesize = MediaQuery.of(context).size.width;
     return Form(
         key: _formKey,
         autovalidate: true,
@@ -122,6 +123,7 @@ class GetNotifiedFormState extends State<GetNotifiedForm>
               );
             },
           ),
+          phonesize < 376 ? 285 : 300
 
            */
           Padding(
@@ -133,7 +135,7 @@ class GetNotifiedFormState extends State<GetNotifiedForm>
                           Padding(
                             padding: padding,
                             child: Text('Create a Price Watch',
-                                style: Theme.of(context).textTheme.display1),
+                                style: Theme.of(context).textTheme.display1.merge(TextStyle(fontSize: phonesize < 501 ? 20 : 30))),
                           ),
                           Container(
                             height: 80,

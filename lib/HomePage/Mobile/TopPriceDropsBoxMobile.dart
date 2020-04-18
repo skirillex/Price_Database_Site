@@ -75,6 +75,19 @@ class _TopPriceDropsBoxMobileState extends State<TopPriceDropsBoxMobile> with Si
           Divider(
             color: Colors.white,
           ),
+          Center(
+            child: Row(
+
+              children: <Widget>[
+                GestureDetector( onTap: () {_moveLeft();}, child: Icon(Icons.arrow_back_ios, color: Colors.deepOrange,size: 30,) ),
+                Container(
+                  width: MediaQuery.of(context).size.width -60,
+                ),
+                GestureDetector( onTap: () {_moveRight();}, child: Icon(Icons.arrow_forward_ios, color: Colors.deepOrange,size: 30,) )
+
+              ],
+            ),
+          ),
 
           Center(
             child: Row(
@@ -92,11 +105,11 @@ class _TopPriceDropsBoxMobileState extends State<TopPriceDropsBoxMobile> with Si
 
                  */
 
-                GestureDetector( onTap: () {_moveLeft();}, child: Icon(Icons.arrow_back_ios, color: Colors.deepOrange,size: 30,) ),  //size: 25
+                  //size: 25
                 SizedBox(
                   height: 450,
                   //width: 345,
-                  width: MediaQuery.of(context).size.width - 60,
+                  width: MediaQuery.of(context).size.width,// - 60,
                   child: Card(
                     elevation: 4,
                     child: Scrollbar(
@@ -114,7 +127,7 @@ class _TopPriceDropsBoxMobileState extends State<TopPriceDropsBoxMobile> with Si
                 ),
 
 
-                GestureDetector( onTap: () {_moveRight(); printscreensize(context);}, child: Icon(Icons.arrow_forward_ios, color: Colors.deepOrange,size: 30,) ) //size 25
+                 //size 25
               ],
             ),
           ),

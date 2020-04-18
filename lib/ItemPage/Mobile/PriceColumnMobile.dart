@@ -31,7 +31,7 @@ class PriceColumnMobile extends StatelessWidget{ //stateless because it needs to
                 //print(snapshot.data.item_price[0][0]);
                 String price = snapshot.data.item_price[0][0].toStringAsFixed(2);  //gets the price and converts it to 2 decimal places
                 return SelectableText("\$${price}",
-                  style: TextStyle(fontSize: phonesize < 376 ? 17 : 20,color: Colors.deepOrange), //25
+                  style: TextStyle(fontSize: phonesize < 376 ? 18 : 20,color: Colors.deepOrange), //25
                 );
               } else if (snapshot.hasError){
                 return Text("${snapshot.error}");
@@ -50,7 +50,7 @@ class PriceColumnMobile extends StatelessWidget{ //stateless because it needs to
               //alignment: Alignment(-0.9, -0.9),
                 width: 70,
                 child: Text("SuperDry Price    ",
-                  textAlign: TextAlign.right,
+                  //textAlign: TextAlign.right,
                   style: TextStyle(fontSize: phonesize < 376 ? 8 : 9,),
                 )
             ),
@@ -64,7 +64,7 @@ class PriceColumnMobile extends StatelessWidget{ //stateless because it needs to
                     String date = snapshot.data.item_price[0][1];
                     date = date.substring(0,date.length -12);
                     return   Text("as of $date      ",
-                        textAlign: TextAlign.right,
+                        //textAlign: TextAlign.right,
                         style: TextStyle(fontSize: phonesize < 376 ? 8 : 9) //10
                     );
                   } else if (snapshot.hasError){

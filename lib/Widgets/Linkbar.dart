@@ -4,6 +4,8 @@ class Linkbar extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
 
+    double phonesize = MediaQuery.of(context).size.width;
+
     return Container(
         decoration: const BoxDecoration(
             border: Border(
@@ -30,7 +32,7 @@ class Linkbar extends StatelessWidget{
               hoverColor: Colors.deepOrangeAccent,
               child: Text(
                 "Top Price Drops",
-                style: TextStyle(fontSize: 20, color: Colors.white),
+                style: TextStyle(fontSize: phonesize < 376 ? 15 : 20, color: Colors.white),
               ),
             ),
             Spacer(),
@@ -42,7 +44,7 @@ class Linkbar extends StatelessWidget{
               hoverColor: Colors.deepOrangeAccent,
               child: Text(
                 "Features",
-                style: TextStyle(fontSize: 20, color: Colors.white),
+                style: TextStyle(fontSize: phonesize < 376 ? 15 : 20, color: Colors.white),
               ),
             ),
             Spacer(),

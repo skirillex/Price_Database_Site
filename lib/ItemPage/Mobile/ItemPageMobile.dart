@@ -140,7 +140,7 @@ class _ItemPageMobileState extends State<ItemPageMobile> {
                                             if (snapshot.hasData) {
                                               return Text(
                                                     capitalize(snapshot.data.url.split("\/")[3]),
-                                                style: Theme.of(context).textTheme.display1.merge(TextStyle(fontSize: phonesize < 376 ? 13 : 15)), textAlign: TextAlign.left,
+                                                style: Theme.of(context).textTheme.display1.merge(TextStyle(fontSize: phonesize < 376 ? 12 : 15)), textAlign: TextAlign.left,
                                               ); // this returns the category of the item, found in item url
                                             } else if (snapshot.hasError) {
                                               return Text("${snapshot.error}");
@@ -159,7 +159,7 @@ class _ItemPageMobileState extends State<ItemPageMobile> {
                                     //alignment: Alignment.bottomLeft,
                                     child: Padding(
                                       padding: EdgeInsets.fromLTRB(
-                                          phonesize < 376 ? 0 : 5, 100, 5, 0),
+                                          phonesize < 376 ? 5 : 5, 100, 5, 0),
                                       child: Row(
                                         children: <Widget>[
                                           Container(
@@ -218,8 +218,12 @@ class _ItemPageMobileState extends State<ItemPageMobile> {
                                         Container(
                                           height: 110, //120
                                         ),
-                                        PriceColumnMobile(
-                                            "2020-03-09", futureItemPrice),
+                                       Padding(
+                                         padding: EdgeInsets.fromLTRB(phonesize < 376 ? 2 : 0, 0, 0, 0),
+                                         child:
+                                         PriceColumnMobile(
+                                             "2020-03-09", futureItemPrice),
+                                       )
 
                                       ],
                                     ),

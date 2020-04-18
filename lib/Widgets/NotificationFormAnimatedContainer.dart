@@ -51,10 +51,12 @@ class NotificationFormAnimatedContainerState extends State<NotificationFormAnima
 
   void opencloseform()
   {
+    double phonesize = MediaQuery.of(context).size.width;
+
     setState(() {
 
       if ( open == false) {
-        height = 480;
+        height = phonesize < 501 ? 416 : 460;
         open = true;
       }
       else
@@ -64,6 +66,14 @@ class NotificationFormAnimatedContainerState extends State<NotificationFormAnima
         }
     }
     );
+  }
+
+  void closeform()
+  {
+    setState(() {
+      height = 0;
+      open = false;
+    });
   }
 
 }
