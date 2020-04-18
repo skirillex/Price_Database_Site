@@ -1,5 +1,6 @@
 // this class creates the description column in the center of the item row
 import 'package:colliecolliecollie/Api/ItemData.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart' as url;
 
@@ -25,8 +26,11 @@ class DescriptionColumn extends StatelessWidget{
               future: futureItem,
               builder: (context, snapshot){
                 if (snapshot.hasData){
-                  return SelectableText("  "+snapshot.data.name,
-                    style: Theme.of(context).textTheme.display1.merge(TextStyle(fontSize: 25)),);
+                  return Padding(
+                    padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                    child: SelectableText(""+snapshot.data.name,
+                      style: Theme.of(context).textTheme.display1.merge(TextStyle(fontSize: 25)),),
+                  );
                 } else if (snapshot.hasError){
                   return Text("${snapshot.error}");
                 }

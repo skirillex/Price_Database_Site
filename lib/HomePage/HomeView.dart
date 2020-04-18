@@ -14,20 +14,20 @@ class HomeView extends StatefulWidget {
 
 class HomeViewState extends State<HomeView> {
   final GlobalKey<NotificationFormAnimatedContainerState>
-      _notificationFormAnimatedContainerState =
-      GlobalKey<NotificationFormAnimatedContainerState>();
+  _notificationFormAnimatedContainerState =
+  GlobalKey<NotificationFormAnimatedContainerState>();
 
   @override
   Widget build(BuildContext context) {
-    String buttonTextClosed = "Get Notified";
-    String buttonTextOpen = "Close";
-    bool openFlag = false;
+    double screensize = MediaQuery
+        .of(context)
+        .size
+        .width;
 
-    String buttonText = buttonTextClosed;
 
     return Scaffold(
         appBar: AppBar(
-          automaticallyImplyLeading: false,
+            automaticallyImplyLeading: false,
             title: //Text("SuperDry Price Database"),
             FlatButton(
               hoverColor: Colors.deepOrangeAccent,
@@ -36,93 +36,138 @@ class HomeViewState extends State<HomeView> {
               },
               child: Text(
                 "CollieCollieCollie",
-                style: Theme.of(context).textTheme.display1.merge(TextStyle(fontSize: 19, color: Colors.white)),
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .display1
+                    .merge(TextStyle(fontSize: 18, color: Colors.white)),
               ),
             ),
             // title
             actions: <Widget>[
-              Row(mainAxisAlignment: MainAxisAlignment.start,
-                  // does nothing so far
-                  children: [
-                    Align(
-                      alignment: Alignment.center,
-                      child:
-                      Container(
-                        //alignment: Alignment(0.0, 0.0),
-                        width: 500,
-                        // stretches out to the left middle of screen so far
-                        child: TextField(
-                            style: TextStyle(fontSize: 10, color: Colors.white),
-                            cursorColor: Colors.white,
-                            maxLines: 1,
-                            obscureText: false,
-                            onTap: () {},
-                            onSubmitted: (String urlString) {
-                              Navigator.pushNamed(context,
-                                  urlString.substring(urlString.indexOf("us")));
-                            },
-                            // get the value
-                            decoration: InputDecoration(
-                                labelStyle: Theme.of(context).textTheme.display1.merge(TextStyle(fontSize: 19, color: Colors.white)),
-                                labelText: 'Enter SuperDry URL to find product',
-                                suffixIcon: Icon(Icons.search, color: Colors.white,))),
-                      ),
-                    ),
-                    Container(
-                      width: 100,
-                    ),
-                    Container(
-                      // container to hold the signup and login buttons
-                      width: 200,
-                      //margin: EdgeInsets.all(10),
-                      child: ButtonBar(
-                        buttonMinWidth: 300,
-                        children: <Widget>[
-                          FlatButton(
-                              child: Text(
-                                "Get Notified",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .display1
-                                    .merge(TextStyle(
-                                  color: Colors.white,
-                                )),
-                                textScaleFactor: .6,
-                              ),
-                              hoverColor: Colors.deepOrangeAccent,
-                              onPressed: () {
-                                print("pressed Get Notified");
+              Flexible(
+                flex: 1,
 
-                                _notificationFormAnimatedContainerState
-                                    .currentState
-                                    .opencloseform();
-                                setState(
-                                      () {},
-                                );
-                              })
-                        ],
+                child: Padding(
+                    padding: EdgeInsets.fromLTRB(1, 3, 1, 3),
+                    child: Container(
+                      width: 0,
+                    )
+                ),
+              ),
+              Flexible(
+                flex: 2,
+                //width: screensize * .8,
+                child: Row(mainAxisAlignment: MainAxisAlignment.start,
+                    // does nothing so far
+                    children: [
+                      Align(
+                        alignment: Alignment.center,
+                        child:
+                        Container(
+                          //alignment: Alignment(0.0, 0.0),
+                          width: 400,
+                          // stretches out to the left middle of screen so far
+                          child: TextField(
+                              style: TextStyle(
+                                  fontSize: 10, color: Colors.white),
+                              cursorColor: Colors.white,
+                              maxLines: 1,
+                              obscureText: false,
+                              onTap: () {},
+                              onSubmitted: (String urlString) {
+                                Navigator.pushNamed(context,
+                                    urlString.substring(urlString.indexOf(
+                                        "us")));
+                              },
+                              // get the value
+                              decoration: InputDecoration(
+                                  focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(color: Colors
+                                          .white)
+                                  ),
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.deepOrange
+                                    ),
+                                  ),
+                                  labelStyle: Theme
+                                      .of(context)
+                                      .textTheme
+                                      .display1
+                                      .merge(
+                                      TextStyle(fontSize: 19, color: Colors
+                                          .white)),
+                                  labelText: 'Enter SuperDry URL to find product',
+                                  suffixIcon: Icon(
+                                    Icons.search, color: Colors.white,))),
+                        ),
                       ),
-                    ),
-                    Container(
-                      width: 50,
-                    ),
-                  ])
+                    ]),
+              ),
+              Flexible(
+                flex: 1,
+                child: Container(
+                  // container to hold the signup and login buttons
+                  width: 200,
+                  //margin: EdgeInsets.all(10),
+                  child: ButtonBar(
+                    buttonMinWidth: 300,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(0, 3, 30, 3),
+                        child: FlatButton(
+                            child: Text(
+                              "Get Notified",
+                              style: Theme
+                                  .of(context)
+                                  .textTheme
+                                  .display1
+                                  .merge(TextStyle(
+                                color: Colors.white,
+                              )),
+                              textScaleFactor: .6,
+                            ),
+                            hoverColor: Colors.deepOrangeAccent,
+                            onPressed: () {
+                              print("pressed Get Notified");
+
+                              _notificationFormAnimatedContainerState
+                                  .currentState
+                                  .opencloseform();
+                              setState(
+                                    () {},
+                              );
+                            }),
+                      )
+                    ],
+                  ),
+                ),
+              )
             ]),
         body: Stack(children: <Widget>[
-          ListView(
-            //padding: const EdgeInsets.only(left: 30, right: 30),
-            children: <Widget>[
-              Linkbar(),
-              WelcomeBox(),
-              Divider(color: Colors.white),
-              TopPriceDropsBox(),
-            ],
+          GestureDetector(
+
+              onTap: () {
+                _notificationFormAnimatedContainerState.currentState
+                    .closeform();
+              },
+              child: ListView(
+                //padding: const EdgeInsets.only(left: 30, right: 30),
+                children: <Widget>[
+                  Linkbar(),
+                  WelcomeBox(),
+                  Divider(color: Colors.white),
+                  TopPriceDropsBox(),
+                ],
+              ),
           ),
           Align(
             alignment: Alignment.topRight,
             child: NotificationFormAnimatedContainer(30,
                 key: _notificationFormAnimatedContainerState),
           ),
-        ]));
+        ])
+    );
   }
 }

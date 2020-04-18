@@ -121,9 +121,12 @@ class _ItemPageState extends State<ItemPage> {
                       child: Column(
                         children: <Widget>[
                           Container(
-                            height: 165,
+                            height: 202,
                           ),
-                          PriceColumn("2020-03-09", futureItemPrice),
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(5, 0, 2, 0),
+                            child: PriceColumn("2020-03-09", futureItemPrice),
+                          )
                         ],
                       ),
                     )

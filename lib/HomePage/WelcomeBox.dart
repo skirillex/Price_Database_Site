@@ -4,6 +4,8 @@ class WelcomeBox extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+    double screensize = MediaQuery.of(context).size.width;
+
     return Center(
         child: SizedBox(
           height: 300,
@@ -44,7 +46,7 @@ class WelcomeBox extends StatelessWidget{
                     ),
                     Align(
                       alignment: Alignment.centerLeft,
-                      child: Text("  1. While Browsing www.superdry.com \n  2. Change the domain of the URL   \n  3. from: www.superdry.com/us/mens/jackets/details/.../ \n  4. to: www.colliecolliecollie.com/us/mens/jackets/details/.../ ", style: Theme.of(context).textTheme.display1, textScaleFactor: .50 /*TextStyle(fontSize: 18)*/,),
+                      child: Text("  1. While Browsing www.superdry.com \n  2. Change the domain of the URL   \n  3. from: www.superdry.com/us/mens/jackets/.../ \n  4. to: www.colliecolliecollie.com/#/us/mens/jackets/.../ ", style: Theme.of(context).textTheme.display1, textScaleFactor: .50 /*TextStyle(fontSize: 18)*/,),
                     ),
                   ],
                 ),

@@ -76,7 +76,7 @@ class PriceColumn extends StatelessWidget{ //stateless because it needs to be dr
 
 
           Container(
-            height: 20,
+            height: 0,
             //child: Spacer(flex: 1,),
           ),
 

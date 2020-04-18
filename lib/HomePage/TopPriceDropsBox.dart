@@ -48,6 +48,9 @@ class _TopPriceDropsBoxState extends State<TopPriceDropsBox> with SingleTickerPr
   @override
   Widget build(BuildContext context) {
 
+    double screensize = MediaQuery.of(context).size.width;
+
+
     return Center(
       child: Column(
         children: <Widget>[
@@ -82,7 +85,7 @@ class _TopPriceDropsBoxState extends State<TopPriceDropsBox> with SingleTickerPr
                 ),
                 SizedBox(
                   height: 450,
-                  width: 900,
+                  width: screensize < 1070 ? screensize-140 : 900,
                   child: Card(
                     elevation: 4,
                     child: Scrollbar(

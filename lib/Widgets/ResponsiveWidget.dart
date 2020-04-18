@@ -31,21 +31,21 @@ class ResponsiveWidget extends StatelessWidget{
   // large screen more than 1200 pixels
   static bool isLargeScreen(BuildContext context)
   {
-    return MediaQuery.of(context).size.width > 1200;
+    return MediaQuery.of(context).size.width > 1000;
   }
 
   // small screen width less than 800 pixels
 
   static bool isSmallScreen(BuildContext context)
   {
-    return MediaQuery.of(context).size.width < 1000;
+    return MediaQuery.of(context).size.width < 700;
   }
 
   // medium screen between 1200 and 800 pixels
 
   static bool isMediumScreen(BuildContext context)
   {
-    return MediaQuery.of(context).size.width > 1000 && MediaQuery.of(context).size.width < 1200;
+    return MediaQuery.of(context).size.width > 700 && MediaQuery.of(context).size.width < 1200;
   }
 
 }

@@ -21,7 +21,7 @@ class FluroRouter {
     router.define("item/:itemId", handler: _itemHandler);
     router.define("/home", handler: _homeHandler, transitionType: TransitionType.fadeIn);
     router.define("/login", handler: _loginHandler, );
-    router.define("us/:gender/:itemcategory/:details/:id/:itemdesc", handler: _itemUrlHandler, transitionType: TransitionType.fadeIn);
+    router.define("/us/:gender/:itemcategory/:details/:id/:itemdesc", handler: _itemUrlHandler, transitionType: TransitionType.fadeIn);
     router.define("/features", handler: _featuresHandler, transitionType: TransitionType.fadeIn);
 
   }
@@ -30,7 +30,7 @@ class FluroRouter {
     handlerFunc: (BuildContext context, Map<String, dynamic> params) => ResponsiveWidget(
       largeScreen: ItemPage(params['itemId'][0]),
       smallScreen: ItemPageMobile(params['itemId'][0]),
-      mediumScreen: ItemPageMobile(params['itemId'][0])
+      mediumScreen: ItemPage(params['itemId'][0])
     )
   );
 
@@ -46,7 +46,7 @@ class FluroRouter {
     handlerFunc: (BuildContext context, Map<String, dynamic> params) => ResponsiveWidget(
       largeScreen: HomeView(),
       smallScreen:  HomeViewMobile(),
-      mediumScreen: HomeViewMobile())
+      mediumScreen: HomeView())
   );
 
   static Handler _loginHandler = Handler (
@@ -57,7 +57,7 @@ class FluroRouter {
     handlerFunc: (BuildContext context, Map<String, dynamic> params) => ResponsiveWidget(
     largeScreen: FeaturesPage(),
       smallScreen: FeaturesPageMobile(),
-      mediumScreen: FeaturesPageMobile(),
+      mediumScreen: FeaturesPage(),
     )
   );
 

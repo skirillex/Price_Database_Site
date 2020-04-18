@@ -41,7 +41,7 @@ List<FeaturesItems> _data = generateItems();
     String buttonText = buttonTextClosed;
 
     return Scaffold(
-      appBar: AppBar(
+      appBar:  AppBar(
           automaticallyImplyLeading: false,
           title: //Text("SuperDry Price Database"),
           FlatButton(
@@ -51,137 +51,162 @@ List<FeaturesItems> _data = generateItems();
             },
             child: Text(
               "CollieCollieCollie",
-              style: Theme.of(context).textTheme.display1.merge(TextStyle(fontSize: 19, color: Colors.white)),
+              style: Theme.of(context).textTheme.display1.merge(TextStyle(fontSize: 18, color: Colors.white)),
             ),
           ),
           // title
           actions: <Widget>[
-            Row(mainAxisAlignment: MainAxisAlignment.start,
-                // does nothing so far
-                children: [
-                  Align(
-                    alignment: Alignment.center,
-                    child:
-                    Container(
-                      //alignment: Alignment(0.0, 0.0),
-                      width: 500,
-                      // stretches out to the left middle of screen so far
-                      child: TextField(
-                          cursorColor: Colors.white,
-                          style: TextStyle(fontSize: 10, color: Colors.white),
-                          maxLines: 1,
-                          obscureText: false,
-                          onTap: () {},
-                          onSubmitted: (String urlString) {
-                            Navigator.pushNamed(context,
-                                urlString.substring(urlString.indexOf("us")));
-                          },
-                          // get the value
-                          decoration: InputDecoration(
-                              labelStyle: Theme.of(context).textTheme.display1.merge(TextStyle(fontSize: 19, color: Colors.white)),
-                              labelText: 'Enter SuperDry URL to find product',
-                              suffixIcon: Icon(Icons.search, color: Colors.white,))),
-                    ),
-                  ),
-                  Container(
-                    width: 100,
-                  ),
-                  Container(
-                    // container to hold the signup and login buttons
-                    width: 200,
-                    //margin: EdgeInsets.all(10),
-                    child: ButtonBar(
-                      buttonMinWidth: 300,
-                      children: <Widget>[
-                        FlatButton(
-                            child: Text(
-                              "Get Notified",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .display1
-                                  .merge(TextStyle(
-                                color: Colors.white,
-                              )),
-                              textScaleFactor: .6,
-                            ),
-                            hoverColor: Colors.deepOrangeAccent,
-                            onPressed: () {
-                              print("pressed Get Notified");
+            Flexible(
+              flex: 1,
 
-                              _notificationFormAnimatedContainerState
-                                  .currentState
-                                  .opencloseform();
-                              setState(
-                                    () {},
-                              );
-                            })
-                      ],
+              child: Padding(
+                  padding: EdgeInsets.fromLTRB(1, 3, 1, 3),
+                  child: Container(
+                    width: 0,
+                  )
+              ),
+            ),
+            Flexible(
+              flex: 2,
+              //width: screensize * .8,
+              child: Row(mainAxisAlignment: MainAxisAlignment.start,
+                  // does nothing so far
+                  children: [
+                    Align(
+                      alignment: Alignment.center,
+                      child:
+                      Container(
+                        //alignment: Alignment(0.0, 0.0),
+                        width: 400,
+                        // stretches out to the left middle of screen so far
+                        child: TextField(
+                            style: TextStyle(fontSize: 10, color: Colors.white),
+                            cursorColor: Colors.white,
+                            maxLines: 1,
+                            obscureText: false,
+                            onTap: () {},
+                            onSubmitted: (String urlString) {
+                              Navigator.pushNamed(context,
+                                  urlString.substring(urlString.indexOf("us")));
+                            },
+                            // get the value
+                            decoration: InputDecoration(
+                                focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.white)
+                                ),
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.deepOrange
+                                  ),
+                                ),
+                                labelStyle: Theme.of(context).textTheme.display1.merge(TextStyle(fontSize: 19, color: Colors.white)),
+                                labelText: 'Enter SuperDry URL to find product',
+                                suffixIcon: Icon(Icons.search, color: Colors.white,))),
+                      ),
                     ),
-                  ),
-                  Container(
-                    width: 50,
-                  ),
-                ])
+                  ]),
+            ),
+            Flexible(
+              flex: 1,
+              child: Container(
+                // container to hold the signup and login buttons
+                width: 200,
+                //margin: EdgeInsets.all(10),
+                child: ButtonBar(
+                  buttonMinWidth: 300,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(0, 3, 30, 3),
+                      child: FlatButton(
+                          child: Text(
+                            "Get Notified",
+                            style: Theme.of(context)
+                                .textTheme
+                                .display1
+                                .merge(TextStyle(
+                              color: Colors.white,
+                            )),
+                            textScaleFactor: .6,
+                          ),
+                          hoverColor: Colors.deepOrangeAccent,
+                          onPressed: () {
+
+                            _notificationFormAnimatedContainerState
+                                .currentState
+                                .opencloseform();
+                            setState(
+                                  () {},
+                            );
+                          }),
+                    )
+                  ],
+                ),
+              ),
+            )
           ]),
       body: Stack(
         children: <Widget>[
-          ListView(
-            //padding: const EdgeInsets.only(left: 30, right: 30),
-            children: <Widget>[
-              Linkbar(),
-              Divider(
-                height: 20,
-                color: Colors.white,
-              ),
-              Center(
-                child: SizedBox(
-                  height: 50,
-                  width: 900,
-                  child: Card(
-                    elevation: 4,
-                    color: Colors.deepOrange,
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text("   Site Features", style: Theme.of(context).textTheme.display1.merge(TextStyle(fontSize: 25, color: Colors.white)),),
-                    ),
-                  ),
-                )
-              ),
-              Center(
-                child: Container(
-                  width: 900,
-                  child: Card(
-                    elevation: 4,
-                    child: ExpansionPanelList.radio(
-                      expansionCallback: (int index, bool isExpanded) {
-                        setState(() {
-                          _data[index].isExpanded = !isExpanded;
-                        });
-                      },
-                      children: _data.map<ExpansionPanel>((FeaturesItems item){
-                        return ExpansionPanelRadio(
-                          value: item.id,
-                          canTapOnHeader: true,
-                          headerBuilder: (BuildContext context, bool isExpanded)
-                              {
-                                return ListTile(
-                                  title: Text(item.headerValue, style: Theme.of(context).textTheme.display1.merge(TextStyle(fontSize: 20))),
-                                );
-                              },
-                          body: ListTile(
-                            title: Text(item.expandedValue, style: Theme.of(context).textTheme.display1.merge(TextStyle(fontSize: 16, color: Colors.black)),),
-                            //subtitle: Text("this is subtitle text"),
-                            //trailing: Icon(Icons.arrow_drop_up),
-                          ),
-                          //isExpanded: item.isExpanded,
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                ),
-              )
-            ],
-          ),
+         GestureDetector(
+
+           onTap: () {_notificationFormAnimatedContainerState.currentState.closeform();},
+           child:  ListView(
+             //padding: const EdgeInsets.only(left: 30, right: 30),
+             children: <Widget>[
+               Linkbar(),
+               Divider(
+                 height: 20,
+                 color: Colors.white,
+               ),
+               Center(
+                   child: SizedBox(
+                     height: 50,
+                     width: 900,
+                     child: Card(
+                       elevation: 4,
+                       color: Colors.deepOrange,
+                       child: Align(
+                         alignment: Alignment.centerLeft,
+                         child: Text("   Site Features", style: Theme.of(context).textTheme.display1.merge(TextStyle(fontSize: 25, color: Colors.white)),),
+                       ),
+                     ),
+                   )
+               ),
+               Center(
+                 child: Container(
+                   width: 900,
+                   child: Card(
+                     elevation: 4,
+                     child: ExpansionPanelList.radio(
+                       expansionCallback: (int index, bool isExpanded) {
+                         setState(() {
+                           _data[index].isExpanded = !isExpanded;
+                         });
+                       },
+                       children: _data.map<ExpansionPanel>((FeaturesItems item){
+                         return ExpansionPanelRadio(
+                           value: item.id,
+                           canTapOnHeader: true,
+                           headerBuilder: (BuildContext context, bool isExpanded)
+                           {
+                             return ListTile(
+                               title: Text(item.headerValue, style: Theme.of(context).textTheme.display1.merge(TextStyle(fontSize: 20))),
+                             );
+                           },
+                           body: ListTile(
+                             title: Text(item.expandedValue, style: Theme.of(context).textTheme.display1.merge(TextStyle(fontSize: 16, color: Colors.black)),),
+                             //subtitle: Text("this is subtitle text"),
+                             //trailing: Icon(Icons.arrow_drop_up),
+                           ),
+                           //isExpanded: item.isExpanded,
+                         );
+                       }).toList(),
+                     ),
+                   ),
+                 ),
+               )
+             ],
+           ),
+         ),
           Align(
             alignment: Alignment.topRight,
             child: NotificationFormAnimatedContainer(30,

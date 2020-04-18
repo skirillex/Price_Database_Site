@@ -41,7 +41,7 @@ class WelcomeBoxMobileState extends State<WelcomeBoxMobile>{
         ),
         Align(
           alignment: Alignment.centerLeft,
-          child: Text("  1. While Browsing www.superdry.com \n  2. Change the domain of the URL   \n  3. from: www.superdry.com/us/mens/jackets/details/.../ \n  4. to: www.colliecolliecollie.com/us/mens/jackets/.../ ", style: Theme.of(context).textTheme.display1.merge(TextStyle(fontSize: fontsizeconverter(context, 15))) /*TextStyle(fontSize: 18)*/,),
+          child: Text("  1. While Browsing www.superdry.com \n  2. Change the domain of the URL   \n  3. from: www.superdry.com/us/mens/jackets/details/.../ \n  4. to: www.colliecolliecollie.com/#/us/mens/jackets/.../ ", style: Theme.of(context).textTheme.display1.merge(TextStyle(fontSize: fontsizeconverter(context, 15))) /*TextStyle(fontSize: 18)*/,),
         ),
         Divider(color: Colors.white)],
     ),);
@@ -95,7 +95,10 @@ class WelcomeBoxMobileState extends State<WelcomeBoxMobile>{
                                 ),
                               ),
 
-                              Text("How to use this site: ",textAlign: TextAlign.left, style: Theme.of(context).textTheme.display1.merge(TextStyle(fontSize: fontsizeconverter(context, 17))) //Text(item.headerValue, style: Theme.of(context).textTheme.display1.merge(TextStyle(fontSize: 20))),
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(" How to use this site: ",textAlign: TextAlign.left, style: Theme.of(context).textTheme.display1.merge(TextStyle(fontSize: fontsizeconverter(context, 17))) //Text(item.headerValue, style: Theme.of(context).textTheme.display1.merge(TextStyle(fontSize: 20))),
+                                ),
                               )
                             ],
                           ));
