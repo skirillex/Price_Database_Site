@@ -193,7 +193,8 @@ class PriceWatchMobileState extends State<PriceWatchMobile> {
     }
   }
   _makePostRequest(email, itemurl, pricethresh) async {
-    String url = "http://209.122.124.193:5000/api/v1/subscriptions/alerts/";
+    //String url = "http://209.122.124.193:5000/api/v1/subscriptions/alerts/";
+    String url = "http://3.222.198.201:5000/api/v1/subscriptions/alerts/";
     Map<String, String> headers = {"Content-type": "application/json"};
     String json =
         '{"email":"${email}", "itemId":"${itemurl}", "price":"${pricethresh}"}';

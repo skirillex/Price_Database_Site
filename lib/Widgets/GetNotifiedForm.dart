@@ -42,7 +42,7 @@ class GetNotifiedFormState extends State<GetNotifiedForm>
   }
 
   _makePostRequest(email, itemurl, pricethresh) async {
-    String url = "http://127.0.0.1:5000/api/v1/subscriptions/alerts/";
+    String url = "http://3.222.198.201:5000/api/v1/subscriptions/alerts/";
     Map<String, String> headers = {"Content-type": "application/json"};
     String json =
         '{"email":"${email}", "itemId":"${itemurl}", "price":"${pricethresh}"}';

@@ -34,7 +34,8 @@ class _TopPriceDropItemsState extends State<TopPriceDropItems>{
   }
 
   Future<TopPriceDropsData> fetchPriceDropItems() async {
-    final response = await http.get("http://209.122.124.193:5000/api/v1/resources/topprices/");
+    final response = await http.get("http://3.222.198.201:5000/api/v1/resources/topprices/");
+    //final response = await http.get("http://172.17.0.1:5000/api/v1/resources/topprices/");
 
     if (response.statusCode == 200) {
       //print(json.decode(response.body));

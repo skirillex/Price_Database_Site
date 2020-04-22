@@ -38,7 +38,7 @@ class _ItemPageMobileState extends State<ItemPageMobile> {
 
   Future<ItemData> fetchItem() async {
     final response = await http.get(
-        "http://209.122.124.193:5000/api/v1/resources/items/?id=${widget.itemId}");
+        "http://3.222.198.201:5000/api/v1/resources/items/?id=${widget.itemId}");
 
     if (response.statusCode == 200) {
       //print(json.decode(response.body));
@@ -50,7 +50,7 @@ class _ItemPageMobileState extends State<ItemPageMobile> {
 
   Future<ItemPriceData> fetchItemPrice() async {
     final response = await http.get(
-        "http://209.122.124.193:5000/api/v1/resources/prices/?id=${widget.itemId}");
+        "http://3.222.198.201:5000/api/v1/resources/prices/?id=${widget.itemId}");
     // item/74443
 
     if (response.statusCode == 200) {
